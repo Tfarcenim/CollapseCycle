@@ -1,7 +1,7 @@
-package com.example.examplemod.platform;
+package tfar.collapsecycle.platform;
 
-import com.example.examplemod.Constants;
-import com.example.examplemod.platform.services.IPlatformHelper;
+import tfar.collapsecycle.Constants;
+import tfar.collapsecycle.platform.services.IPlatformHelper;
 
 import java.util.ServiceLoader;
 
