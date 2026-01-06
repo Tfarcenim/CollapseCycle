@@ -1,0 +1,17 @@
+{
+  "type": "collapsecycle:nullzone",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "minecraft:the_void",
+      "features": false,
+      "lakes": false,
+      "layers": [
+        {
+          "block": "minecraft:white_concrete",
+          "height": 1
+        }
+      ]
+    }
+  }
+}

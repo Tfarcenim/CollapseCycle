@@ -10,10 +10,12 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
+import net.minecraft.world.level.levelgen.flat.FlatLayerInfo;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
 
 import java.util.List;
@@ -37,8 +39,10 @@ public class NullDimension {
     public static void bootstrapStem(BootstapContext<LevelStem> context) {
         HolderGetter<Biome> holdergetter = context.lookup(Registries.BIOME);
         HolderGetter<DimensionType> holdergetterDim = context.lookup(Registries.DIMENSION_TYPE);
-        context.register(LEVEL_STEM,new LevelStem(holdergetterDim.getOrThrow(DIMENSION_TYPE),new FlatLevelSource(new FlatLevelGeneratorSettings(
-                Optional.empty(),holdergetter.getOrThrow(Biomes.THE_VOID), List.of())
-        )));
+        FlatLevelGeneratorSettings flatLevelGeneratorSettings = new FlatLevelGeneratorSettings(
+                Optional.empty(),holdergetter.getOrThrow(Biomes.THE_VOID), List.of());
+        flatLevelGeneratorSettings.getLayersInfo().add(new FlatLayerInfo(1, Blocks.WHITE_CONCRETE));
+        context.register(LEVEL_STEM,new LevelStem(holdergetterDim.getOrThrow(DIMENSION_TYPE),new FlatLevelSource(flatLevelGeneratorSettings)
+        ));
     }
 }
