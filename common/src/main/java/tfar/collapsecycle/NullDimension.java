@@ -41,6 +41,7 @@ public class NullDimension {
         HolderGetter<DimensionType> holdergetterDim = context.lookup(Registries.DIMENSION_TYPE);
         FlatLevelGeneratorSettings flatLevelGeneratorSettings = new FlatLevelGeneratorSettings(
                 Optional.empty(),holdergetter.getOrThrow(Biomes.THE_VOID), List.of());
+        flatLevelGeneratorSettings.getLayersInfo().add(new FlatLayerInfo(1, Blocks.BEDROCK));
         flatLevelGeneratorSettings.getLayersInfo().add(new FlatLayerInfo(1, Blocks.WHITE_CONCRETE));
         context.register(LEVEL_STEM,new LevelStem(holdergetterDim.getOrThrow(DIMENSION_TYPE),new FlatLevelSource(flatLevelGeneratorSettings)
         ));

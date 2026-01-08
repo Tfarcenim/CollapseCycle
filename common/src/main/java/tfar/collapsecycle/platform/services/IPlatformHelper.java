@@ -1,5 +1,11 @@
 package tfar.collapsecycle.platform.services;
 
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+
+import java.nio.file.Path;
+import java.util.function.Supplier;
+
 public interface IPlatformHelper {
 
     /**
@@ -33,4 +39,9 @@ public interface IPlatformHelper {
 
         return isDevelopmentEnvironment() ? "development" : "production";
     }
+
+    <I extends Block> Supplier<I> blockSupplier(String id, Supplier<I> supplier);
+    <I extends Item> Supplier<I> itemSupplier(String id,Supplier<I> supplier);
+
+    Path getSaveDirectory();
 }

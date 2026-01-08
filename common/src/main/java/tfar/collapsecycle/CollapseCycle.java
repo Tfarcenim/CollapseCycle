@@ -1,9 +1,16 @@
 package tfar.collapsecycle;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import tfar.collapsecycle.platform.Services;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.Items;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+
+import java.util.List;
 
 // This class is part of the common project meaning it is shared between all supported loaders. Code written here can only
 // import and access the vanilla codebase, libraries used by vanilla, and optionally third party libraries that provide
@@ -24,7 +31,60 @@ public class CollapseCycle {
         // the platform specific approach.
     }
 
+    public static void levelTick(ServerLevel level) {
+        ResourceKey<Level> dimension = level.dimension();
+        if (corruptible(dimension)) {
+            long gameTime = level.getGameTime();
+            long limit = CollapseCycleConfig.Server.TIME_LIMIT.get();
+            if (gameTime >= limit) {
+                if (gameTime == limit) {
+                    beginCorruption(level);
+                } else {
+
+                }
+            }
+        }
+    }
+
+    public static boolean corruptible(ResourceKey<Level> dimension) {
+        return dimension == Level.OVERWORLD || dimension ==  Level.NETHER;
+    }
+
+    public static void playerTick(ServerPlayer player) {
+        ServerLevel level = player.serverLevel();
+        ResourceKey<Level> dimension = level.dimension();
+        if (corruptible(dimension)) {
+            long gameTime = level.getGameTime();
+            long limit = CollapseCycleConfig.Server.TIME_LIMIT.get();
+            if (gameTime >= limit) {
+                Vec3 pos = player.position();
+                if (Math.abs(pos.x) < 1 && Math.abs(pos.z)<1) {
+                    ServerLevel serverLevel = player.server.getLevel(NullDimension.DIMENSION);
+                    if (serverLevel == null) {
+                        return;
+                    }
+                    player.teleportTo(serverLevel,0,2,0,0,0);
+                    //player.server.execute(() -> player.changeDimension(serverLevel));
+                }
+            }
+        }
+    }
+
+    static void beginCorruption(ServerLevel level) {
+
+    }
+
     public static ResourceLocation id(String key) {
         return new ResourceLocation(Constants.MOD_ID,key);
+    }
+
+    public static void onDimChange(ServerPlayer player, ResourceKey<Level> dimension) {
+        MinecraftServer server = player.server;
+        if (dimension == NullDimension.DIMENSION) {
+            List<ServerPlayer> remainingPlayers = server.overworld().players();
+            if (remainingPlayers.isEmpty()) {
+                SpaceTimeManager.reset(player.server);
+            }
+        }
     }
 }
