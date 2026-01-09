@@ -83,7 +83,7 @@ public class CollapseCycle {
         if (dimension == NullDimension.DIMENSION) {
             List<ServerPlayer> remainingPlayers = server.overworld().players();
             if (remainingPlayers.isEmpty()) {
-                SpaceTimeManager.reset(player.server);
+                server.execute(() -> SpaceTimeManager.reset(server));
             }
         }
     }
