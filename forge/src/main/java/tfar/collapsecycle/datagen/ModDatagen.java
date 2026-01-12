@@ -15,5 +15,6 @@ public class ModDatagen {
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         generator.addProvider(true,new ModDatapackRegistryProvider(packOutput,lookupProvider));
+        generator.addProvider(true,new ModLangProvider(packOutput));
     }
 }

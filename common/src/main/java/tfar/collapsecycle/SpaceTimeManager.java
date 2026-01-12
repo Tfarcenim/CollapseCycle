@@ -41,9 +41,10 @@ public class SpaceTimeManager {
             File file = server.storageSource.levelDirectory.path().toFile();
             delete(file);
 
+            ((MinecraftServerDuck)server).resetNether();
+            ((MinecraftServerDuck)server).resetOverworld();
 
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

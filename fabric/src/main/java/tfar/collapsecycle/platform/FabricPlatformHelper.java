@@ -2,6 +2,7 @@ package tfar.collapsecycle.platform;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import tfar.collapsecycle.CollapseCycle;
@@ -39,6 +40,12 @@ public class FabricPlatformHelper implements IPlatformHelper {
     @Override
     public <I extends Item> Supplier<I> itemSupplier(String id, Supplier<I> supplier) {
         Registry.register(BuiltInRegistries.ITEM, CollapseCycle.id(id),supplier.get());
+        return supplier;
+    }
+
+    @Override
+    public  Supplier<CreativeModeTab> tabSupplier(String id, Supplier<CreativeModeTab> supplier) {
+        Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB,CollapseCycle.id(id),supplier.get());
         return supplier;
     }
 

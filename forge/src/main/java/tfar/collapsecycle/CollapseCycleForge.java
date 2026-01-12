@@ -3,6 +3,7 @@ package tfar.collapsecycle;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -44,6 +45,9 @@ public class CollapseCycleForge {
         } else if ((Registry<?>)event.getVanillaRegistry() == BuiltInRegistries.BLOCK) {
             ForgePlatformHelper.BLOCKS.forEach(stringSupplierPair -> event.register(Registries.BLOCK,CollapseCycle.id(stringSupplierPair.getKey()),
                     (Supplier<Block>)stringSupplierPair.getValue()));
+        } else if ((Registry<?>)event.getVanillaRegistry() == BuiltInRegistries.CREATIVE_MODE_TAB) {
+            ForgePlatformHelper.TABS.forEach(stringSupplierPair -> event.register(Registries.CREATIVE_MODE_TAB,CollapseCycle.id(stringSupplierPair.getKey()),
+                    stringSupplierPair.getValue()));
         }
     }
 }

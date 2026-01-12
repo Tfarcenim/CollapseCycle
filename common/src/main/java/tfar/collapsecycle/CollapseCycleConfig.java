@@ -11,7 +11,7 @@ public class CollapseCycleConfig {
         static {
             ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
             builder.push("general");
-            TIME_LIMIT =builder.defineInRange("time_limit",20 * 60 * 20/60,5,Long.MAX_VALUE);
+            TIME_LIMIT =builder.defineInRange("time_limit",20 * 60 * 20/10,5,Long.MAX_VALUE);
             builder.pop();
 
             SPEC = builder.build();

@@ -1,5 +1,6 @@
 package tfar.collapsecycle.platform.services;
 
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
@@ -42,6 +43,7 @@ public interface IPlatformHelper {
 
     <I extends Block> Supplier<I> blockSupplier(String id, Supplier<I> supplier);
     <I extends Item> Supplier<I> itemSupplier(String id,Supplier<I> supplier);
+    Supplier<CreativeModeTab> tabSupplier(String id, Supplier<CreativeModeTab> supplier);
 
     Path getSaveDirectory();
 }

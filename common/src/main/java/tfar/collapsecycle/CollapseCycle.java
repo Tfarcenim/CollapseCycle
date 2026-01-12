@@ -9,6 +9,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import tfar.collapsecycle.init.ModBlocks;
+import tfar.collapsecycle.init.ModItems;
 
 import java.util.List;
 
@@ -29,6 +31,8 @@ public class CollapseCycle {
         // your own abstraction layer. You can learn more about this in our provided services class. In this example
         // we have an interface in the common code and use a loader specific implementation to delegate our call to
         // the platform specific approach.
+        ModBlocks.init();
+        ModItems.init();
     }
 
     public static void levelTick(ServerLevel level) {

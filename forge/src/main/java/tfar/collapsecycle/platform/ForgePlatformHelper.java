@@ -1,5 +1,6 @@
 package tfar.collapsecycle.platform;
 
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -35,6 +36,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
 
     public static final List<Pair<String,Supplier<? extends Item>>> ITEMS = new ArrayList<>();
     public static final List<Pair<String,Supplier<? extends Block>>> BLOCKS = new ArrayList<>();
+    public static final List<Pair<String,Supplier<CreativeModeTab>>> TABS = new ArrayList<>();
 
     @Override
     public <I extends Block> Supplier<I> blockSupplier(String id, Supplier<I> supplier) {
@@ -45,6 +47,12 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public <I extends Item> Supplier<I> itemSupplier(String id, Supplier<I> supplier) {
         ITEMS.add(Pair.of(id,supplier));
+        return supplier;
+    }
+
+    @Override
+    public Supplier<CreativeModeTab> tabSupplier(String id, Supplier<CreativeModeTab> supplier) {
+        TABS.add(Pair.of(id,supplier));
         return supplier;
     }
 
