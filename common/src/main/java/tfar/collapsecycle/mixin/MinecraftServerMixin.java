@@ -1,20 +1,28 @@
 package tfar.collapsecycle.mixin;
 
 import com.google.common.collect.ImmutableList;
+import it.unimi.dsi.fastutil.longs.LongIterator;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.LayeredRegistryAccess;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.RegistryLayer;
+import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.TicketType;
 import net.minecraft.server.level.progress.ChunkProgressListener;
 import net.minecraft.server.level.progress.ChunkProgressListenerFactory;
+import net.minecraft.util.Unit;
 import net.minecraft.world.RandomSequences;
 import net.minecraft.world.entity.ai.village.VillageSiege;
 import net.minecraft.world.entity.npc.CatSpawner;
 import net.minecraft.world.entity.npc.WanderingTraderSpawner;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.CustomSpawner;
+import net.minecraft.world.level.ForcedChunksSavedData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.border.BorderChangeListener;
@@ -24,11 +32,13 @@ import net.minecraft.world.level.levelgen.PatrolSpawner;
 import net.minecraft.world.level.levelgen.PhantomSpawner;
 import net.minecraft.world.level.levelgen.WorldOptions;
 import net.minecraft.world.level.storage.*;
+import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import tfar.collapsecycle.MinecraftServerDuck;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
@@ -47,6 +57,13 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
     @Shadow @Final protected WorldData worldData;
 
     @Shadow public abstract ServerLevel overworld();
+
+    @Shadow @Final private static Logger LOGGER;
+    @Shadow protected long nextTickTime;
+
+    @Shadow protected abstract void waitUntilNextTick();
+
+    @Shadow protected abstract void updateMobSpawningFlags();
 
     boolean resetting;
 
@@ -79,9 +96,30 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
         levels.put(Level.NETHER,newLevel);
     }
 
+    /**
+     * @see MinecraftServer#createLevels(ChunkProgressListener)
+     *
+     */
     @Override
     public void resetOverworld() {
-        ServerLevel serverLevel = overworld();
+        ServerLevel oldServerLevel = overworld();
+        try {
+
+            this.nextTickTime = Util.getMillis() + 1L;
+
+           // for(ServerLevel serverlevel1 : this.getAllLevels()) {
+                oldServerLevel.getChunkSource().removeTicketsOnClosing();
+                oldServerLevel.getChunkSource().tick(() -> {
+                    return true;
+                }, false);
+           // }
+
+            this.waitUntilNextTick();
+
+            oldServerLevel.close();
+        } catch (IOException e) {
+            //throw new RuntimeException(e);
+        }
 
         ServerLevelData serverleveldata = this.worldData.overworldData();
 
@@ -105,5 +143,41 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
 
                 this.storageSource, serverleveldata, Level.OVERWORLD, levelstem, chunkprogresslistener, flag, j, list, true, null);
         levels.put(Level.OVERWORLD,newLevel);
+
+        //////////////////////prepare
+
+        LOGGER.info("Preparing start region for dimension {}", newLevel.dimension().location());
+        BlockPos blockpos = newLevel.getSharedSpawnPos();
+        chunkprogresslistener.updateSpawnPos(new ChunkPos(blockpos));
+        ServerChunkCache serverchunkcache = newLevel.getChunkSource();
+        this.nextTickTime = Util.getMillis();
+        serverchunkcache.addRegionTicket(TicketType.START, new ChunkPos(blockpos), 11, Unit.INSTANCE);
+
+        while(serverchunkcache.getTickingGenerated() != 441) {
+            this.nextTickTime = Util.getMillis() + 10L;
+            this.waitUntilNextTick();
+        }
+
+        this.nextTickTime = Util.getMillis() + 10L;
+        this.waitUntilNextTick();
+
+        /*for(ServerLevel serverlevel1 : this.levels.values()) {
+            ForcedChunksSavedData forcedchunkssaveddata = serverlevel1.getDataStorage().get(ForcedChunksSavedData::load, "chunks");
+            if (forcedchunkssaveddata != null) {
+                LongIterator longiterator = forcedchunkssaveddata.getChunks().iterator();
+
+                while(longiterator.hasNext()) {
+                    long i1 = longiterator.nextLong();
+                    ChunkPos chunkpos = new ChunkPos(i1);
+                    serverlevel1.getChunkSource().updateChunkForced(chunkpos, true);
+                }
+            }
+        }*/
+
+        this.nextTickTime = Util.getMillis() + 10L;
+        this.waitUntilNextTick();
+        chunkprogresslistener.stop();
+        this.updateMobSpawningFlags();
+
     }
 }

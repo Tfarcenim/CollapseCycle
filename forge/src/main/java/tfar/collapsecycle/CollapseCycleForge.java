@@ -9,6 +9,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -47,6 +48,7 @@ public class CollapseCycleForge {
         MinecraftForge.EVENT_BUS.addListener(this::playerTick);
         MinecraftForge.EVENT_BUS.addListener(this::fallingCorrupt);
         MinecraftForge.EVENT_BUS.addListener(this::dimChange);
+        MinecraftForge.EVENT_BUS.addListener(this::commands);
         CollapseCycle.init();
     }
 
@@ -58,6 +60,10 @@ public class CollapseCycleForge {
         if (event.phase == TickEvent.Phase.END) {
             CollapseCycle.playerTick(event.player);
         }
+    }
+
+    void commands(RegisterCommandsEvent event) {
+        CollapseCycleCommands.register(event.getDispatcher());
     }
 
     void setup(FMLCommonSetupEvent event) {

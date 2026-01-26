@@ -79,6 +79,7 @@ public class CollapseCycle {
     }
 
     public static <MSG extends S2CModPacket> void sendToPlayersInLevel(ServerLevel level,MSG msg) {
+        ResourceKey<Level> dim = level.dimension();
         for (ServerPlayer player : level.players()) {
             Services.PLATFORM.sendToClient(msg, player);
         }
@@ -154,7 +155,7 @@ public class CollapseCycle {
         if (dimension == NullDimension.DIMENSION) {
             List<ServerPlayer> remainingPlayers = server.overworld().players();
             if (remainingPlayers.isEmpty()) {
-                server.execute(() -> SpaceTimeManager.reset(server));
+             //   server.execute(() -> SpaceTimeManager.reset(server));
             }
         }
     }
