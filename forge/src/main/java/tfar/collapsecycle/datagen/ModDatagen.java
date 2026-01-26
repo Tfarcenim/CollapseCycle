@@ -3,6 +3,7 @@ package tfar.collapsecycle.datagen;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 
@@ -16,5 +17,9 @@ public class ModDatagen {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         generator.addProvider(true,new ModDatapackRegistryProvider(packOutput,lookupProvider));
         generator.addProvider(true,new ModLangProvider(packOutput));
+        generator.addProvider(true,new ModRecipeProvider(packOutput));
+        generator.addProvider(true,new ModBlockstateProvider(packOutput,existingFileHelper));
+        BlockTagsProvider blockTagsProvider = new ModBlockTagProvider(packOutput,lookupProvider,existingFileHelper);
+        generator.addProvider(true,blockTagsProvider);
     }
 }

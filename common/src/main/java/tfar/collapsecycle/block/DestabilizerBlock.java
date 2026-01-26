@@ -25,7 +25,6 @@ public class DestabilizerBlock extends Block {
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         MinecraftServer server = level.getServer();
-        ServerLevel overworld = server.overworld();
         ServerLevelData serverLevelData = server.getWorldData().overworldData();
         if (serverLevelData instanceof PrimaryLevelData primaryLevelData) {
             primaryLevelData.setGameTime(CollapseCycleConfig.Server.TIME_LIMIT.get());

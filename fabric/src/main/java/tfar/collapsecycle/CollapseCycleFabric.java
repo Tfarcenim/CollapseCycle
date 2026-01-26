@@ -2,6 +2,7 @@ package tfar.collapsecycle;
 
 import fuzs.forgeconfigapiport.api.config.v2.ForgeConfigRegistry;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraftforge.fml.config.ModConfig;
 
@@ -17,7 +18,7 @@ public class CollapseCycleFabric implements ModInitializer {
         // Use Fabric to bootstrap the Common mod.
         ForgeConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.SERVER, CollapseCycleConfig.Server.SPEC);
         ServerTickEvents.START_WORLD_TICK.register(CollapseCycle::levelTick);
-
+        CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> CollapseCycleCommands.register(commandDispatcher));
         CollapseCycle.init();
     }
 }

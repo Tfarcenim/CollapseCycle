@@ -19,10 +19,7 @@ public class ServerPlayerMixinFabric {
     private void onDimChange(ServerLevel destination, CallbackInfoReturnable<Entity> cir) {
         CollapseCycle.onDimChange((ServerPlayer)(Object)this,destination.dimension());
     }
-    @Inject(method = "tick",at = @At("TAIL"))
-    private void onEndTick(CallbackInfo ci) {
-        CollapseCycle.playerTick((ServerPlayer)(Object)this);
-    }
+
 
     @Inject(method = "teleportTo(Lnet/minecraft/server/level/ServerLevel;DDDFF)V",at = @At(value = "INVOKE", target = "Lnet/minecraft/server/players/PlayerList;sendAllPlayerInfo(Lnet/minecraft/server/level/ServerPlayer;)V"))
     private void onTeleport(ServerLevel newLevel, double x, double y, double z, float yaw, float pitch, CallbackInfo ci) {

@@ -17,6 +17,7 @@ public class ModLangProvider extends LanguageProvider {
         addBlock(ModBlocks.NULLSTONE,"Nullstone");
         addBlock(ModBlocks.SPARKFLOWER,"Sparkflower");
         addItem(ModItems.COLLAPSE_CLOCK,"Collapse Clock");
+        addItem(ModItems.CORRUPT,"Corrupt");
         addItem(ModItems.GRASSWAND,"Grasswand");
     }
 }

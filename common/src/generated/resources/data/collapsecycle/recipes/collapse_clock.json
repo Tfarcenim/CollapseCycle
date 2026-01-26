@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "collapsecycle:corrupt"
+    },
+    "c": {
+      "item": "minecraft:clock"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "o": {
+      "item": "minecraft:observer"
+    },
+    "t": {
+      "item": "minecraft:tinted_glass"
+    }
+  },
+  "pattern": [
+    " o ",
+    "ici",
+    "CtC"
+  ],
+  "result": {
+    "item": "collapsecycle:collapse_clock"
+  },
+  "show_notification": true
+}

@@ -17,7 +17,8 @@
     "entrypoints": {
         "main": [
           "tfar.collapsecycle.CollapseCycleFabric"
-        ]
+        ],
+        "client": ["tfar.collapsecycle.CollapseCycleClientFabric"]
     },
     "mixins": [
         "${mod_id}.mixins.json",

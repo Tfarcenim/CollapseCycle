@@ -17,6 +17,7 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.FlatLevelSource;
 import net.minecraft.world.level.levelgen.flat.FlatLayerInfo;
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
+import tfar.collapsecycle.init.ModBlocks;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class NullDimension {
         FlatLevelGeneratorSettings flatLevelGeneratorSettings = new FlatLevelGeneratorSettings(
                 Optional.empty(),holdergetter.getOrThrow(Biomes.THE_VOID), List.of());
         flatLevelGeneratorSettings.getLayersInfo().add(new FlatLayerInfo(1, Blocks.BEDROCK));
-        flatLevelGeneratorSettings.getLayersInfo().add(new FlatLayerInfo(1, Blocks.WHITE_CONCRETE));
+        flatLevelGeneratorSettings.getLayersInfo().add(new FlatLayerInfo(1, ModBlocks.NULLSTONE.get()));
         context.register(LEVEL_STEM,new LevelStem(holdergetterDim.getOrThrow(DIMENSION_TYPE),new FlatLevelSource(flatLevelGeneratorSettings)
         ));
     }

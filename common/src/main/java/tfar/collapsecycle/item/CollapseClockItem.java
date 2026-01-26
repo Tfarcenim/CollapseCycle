@@ -22,3 +22,4 @@ public class CollapseClockItem extends Item {
         }
     }
 }
+//--Collapse Clock: an item that displays how long until collapse in its tooltip. (Craftable with a clock, corrupt, observer, 2 iron, and 1 tinted-glass)

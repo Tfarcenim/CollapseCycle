@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "b": {
+      "item": "minecraft:blaze_rod"
+    },
+    "g": {
+      "item": "minecraft:grass_block"
+    }
+  },
+  "pattern": [
+    " b ",
+    "aga",
+    " b "
+  ],
+  "result": {
+    "item": "collapsecycle:grasswand"
+  },
+  "show_notification": true
+}

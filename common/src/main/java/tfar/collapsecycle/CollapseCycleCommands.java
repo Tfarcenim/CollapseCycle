@@ -1,0 +1,28 @@
+package tfar.collapsecycle;
+
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.context.CommandContext;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.storage.PrimaryLevelData;
+import net.minecraft.world.level.storage.ServerLevelData;
+
+public class CollapseCycleCommands {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(Commands.literal(Constants.MOD_ID)
+                .then(Commands.literal("trigger")
+                        .requires(stack -> stack.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                        .executes(CollapseCycleCommands::trigger)));
+    }
+
+    static int trigger(CommandContext<CommandSourceStack> context) {
+        CommandSourceStack commandSourceStack = context.getSource();
+        MinecraftServer server = commandSourceStack.getServer();
+        ServerLevelData serverLevelData = server.getWorldData().overworldData();
+        if (serverLevelData instanceof PrimaryLevelData primaryLevelData) {
+            primaryLevelData.setGameTime(CollapseCycleConfig.Server.TIME_LIMIT.get());
+        }
+        return 1;
+    }
+}

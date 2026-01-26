@@ -3,10 +3,14 @@ package tfar.collapsecycle;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -35,7 +39,14 @@ public class CollapseCycleForge {
         if (FMLEnvironment.dist.isClient()) {
             CollapseCycleClientForge.init(bus);
         }
+        MinecraftForge.EVENT_BUS.addListener(this::fallingCorrupt);
         CollapseCycle.init();
+    }
+
+    void fallingCorrupt(TickEvent.LevelTickEvent event) {
+        if (event.phase == TickEvent.Phase.END && event.side == LogicalSide.SERVER) {
+            CollapseCycle.levelTick((ServerLevel) event.level);
+        }
     }
 
     void register(RegisterEvent event) {
