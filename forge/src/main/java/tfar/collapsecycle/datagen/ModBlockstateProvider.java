@@ -1,9 +1,11 @@
 package tfar.collapsecycle.datagen;
 
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.Constants;
 import tfar.collapsecycle.init.ModBlocks;
 
@@ -15,5 +17,12 @@ public class ModBlockstateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simpleBlockWithItem(ModBlocks.NULLSTONE.get(),cubeAll(ModBlocks.NULLSTONE.get()));
+        simpleBlockWithItem(ModBlocks.DESTABILIZER.get(),models().cubeAll("destabilizer",mcLoc("block/lodestone_side")));
+        flower(ModBlocks.SPARKFLOWER.get(),mcLoc("block/dandelion"));
+    }
+
+    protected void flower(Block block, ResourceLocation texture) {
+        simpleBlock(block,models().cross("sparkflower",texture));
+        itemModels().singleTexture("sparkflower",mcLoc("item/generated"),texture);
     }
 }

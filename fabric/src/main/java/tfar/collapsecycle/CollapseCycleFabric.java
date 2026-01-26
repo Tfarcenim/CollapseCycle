@@ -5,6 +5,7 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraftforge.fml.config.ModConfig;
+import tfar.collapsecycle.network.PacketHandler;
 
 public class CollapseCycleFabric implements ModInitializer {
     
@@ -20,5 +21,6 @@ public class CollapseCycleFabric implements ModInitializer {
         ServerTickEvents.START_WORLD_TICK.register(CollapseCycle::levelTick);
         CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> CollapseCycleCommands.register(commandDispatcher));
         CollapseCycle.init();
+        PacketHandler.registerPackets();
     }
 }

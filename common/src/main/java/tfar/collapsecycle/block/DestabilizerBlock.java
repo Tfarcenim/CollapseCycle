@@ -12,7 +12,9 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.PrimaryLevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
+import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.CollapseCycleConfig;
+import tfar.collapsecycle.CollapseSavedData;
 
 public class DestabilizerBlock extends Block {
     public static final BooleanProperty TRIGGERED = BlockStateProperties.TRIGGERED;
@@ -25,9 +27,10 @@ public class DestabilizerBlock extends Block {
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         MinecraftServer server = level.getServer();
-        ServerLevelData serverLevelData = server.getWorldData().overworldData();
-        if (serverLevelData instanceof PrimaryLevelData primaryLevelData) {
-            primaryLevelData.setGameTime(CollapseCycleConfig.Server.TIME_LIMIT.get());
+        for (ServerLevel serverLevel : server.getAllLevels()) {
+            if (CollapseCycle.corruptible(serverLevel.dimension()) && server.getGameRules().getBoolean(CollapseCycle.ACTIVE)) {
+                CollapseSavedData.getOrMake(serverLevel).destabilize();
+            }
         }
     }
 

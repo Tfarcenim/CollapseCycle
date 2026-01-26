@@ -1,10 +1,15 @@
 package tfar.collapsecycle.platform.services;
 
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import tfar.collapsecycle.network.C2SModPacket;
+import tfar.collapsecycle.network.S2CModPacket;
 
 import java.nio.file.Path;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface IPlatformHelper {
@@ -46,4 +51,9 @@ public interface IPlatformHelper {
     Supplier<CreativeModeTab> tabSupplier(String id, Supplier<CreativeModeTab> supplier);
 
     Path getSaveDirectory();
+
+    <MSG extends C2SModPacket> void registerServerPacket(Class<MSG> packetLocation, Function<FriendlyByteBuf,MSG> reader);
+    <MSG extends S2CModPacket> void registerClientPacket(Class<MSG> packetLocation, Function<FriendlyByteBuf,MSG> reader);
+    void sendToClient(S2CModPacket msg, ServerPlayer player);
+    void sendToServer(C2SModPacket msg);
 }

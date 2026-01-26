@@ -10,11 +10,15 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
 import tfar.collapsecycle.init.ModBlocks;
 import tfar.collapsecycle.init.ModItems;
+import tfar.collapsecycle.network.S2CModPacket;
+import tfar.collapsecycle.network.S2CSetCollapseInfo;
+import tfar.collapsecycle.platform.Services;
 
 import java.util.HashMap;
 import java.util.List;
@@ -42,13 +46,18 @@ public class CollapseCycle {
         ModItems.init();
     }
 
+    public static final GameRules.Key<GameRules.BooleanValue> ACTIVE = GameRules.register("collapsecycle:collapse_active",
+            GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
+
     public static void levelTick(ServerLevel level) {
         ResourceKey<Level> dimension = level.dimension();
+
         if (corruptible(dimension)) {
-            long gameTime = level.getGameTime();
-            long limit = CollapseCycleConfig.Server.TIME_LIMIT.get();
-            if (gameTime >= limit) {
-                if (gameTime == limit) {
+            CollapseSavedData data = CollapseSavedData.getOrMake(level);
+            data.tick();
+            long countdown = data.countdown();
+            if (countdown <= 0) {
+                if (countdown == 0) {
                     beginCorruption(level);
                 } else {
                     Iterable<ChunkHolder> chunks = level.getChunkSource().chunkMap.getChunks();
@@ -69,6 +78,12 @@ public class CollapseCycle {
         }
     }
 
+    public static <MSG extends S2CModPacket> void sendToPlayersInLevel(ServerLevel level,MSG msg) {
+        for (ServerPlayer player : level.players()) {
+            Services.PLATFORM.sendToClient(msg, player);
+        }
+    }
+
     public static boolean corruptible(ResourceKey<Level> dimension) {
         return dimension == Level.OVERWORLD || dimension == Level.NETHER;
     }
@@ -79,12 +94,16 @@ public class CollapseCycle {
         Level level = player.level();
         ResourceKey<Level> dimension = level.dimension();
         if (corruptible(dimension)) {
-            long gameTime = level.getGameTime();
-            long limit = CollapseCycleConfig.Server.TIME_LIMIT.get();
-            if (gameTime >= limit) {
+            long countdown = getCountdown(player.level());
+            if (countdown <= 0) {
+                int corruptionPos = getCorruptionPos(level);
                 Vec3 pos = player.position();
+                double x = Math.abs(pos.x);
+                double z = Math.abs(pos.z);
+
+
                 PlayerDuck playerDuck = (PlayerDuck) player;
-                if (Math.abs(pos.x) < 1 && Math.abs(pos.z) < 1) {
+                if (x < 2 && z < 2) {
                     int timeinBeam = playerDuck.timeInBeam();
                     if (player instanceof ServerPlayer serverPlayer) {
                         ServerLevel serverLevel = serverPlayer.server.getLevel(NullDimension.DIMENSION);
@@ -93,16 +112,33 @@ public class CollapseCycle {
                         }
                         if (timeinBeam >= DELAY) {
                             serverPlayer.teleportTo(serverLevel, 0, 2, 0, 0, 0);
+                            Services.PLATFORM.sendToClient(new S2CSetCollapseInfo(false,CollapseCycleConfig.Server.TIME_LIMIT.get()),serverPlayer);
                             playerDuck.reset();
                         }
                         //player.server.execute(() -> player.changeDimension(serverLevel));
                     }
-                    playerDuck.setTimeInBeam(timeinBeam+1);
+                    playerDuck.setTimeInBeam(timeinBeam + 1);
                 } else {
                     playerDuck.reset();
                 }
             }
         }
+    }
+
+    public static long getCountdown(Level level) {
+        return level.isClientSide ? CollapseCycleClient.getCountdown() : CollapseSavedData.getOrMake((ServerLevel) level).countdown();
+    }
+
+    public static int getCorruptionPos(Level level) {
+        long countdown = getCountdown(level);
+        int worldborderPos = level.getWorldBorder().getAbsoluteMaxSize();
+        long collapseEnd = CollapseCycleConfig.Server.TIME_TO_0_0.get();
+        if (countdown > 0) {
+            return worldborderPos;
+        } else if (countdown < -collapseEnd) {
+            return worldborderPos;
+        }
+        return 0;
     }
 
     static void beginCorruption(ServerLevel level) {
@@ -121,5 +157,9 @@ public class CollapseCycle {
                 server.execute(() -> SpaceTimeManager.reset(server));
             }
         }
+    }
+
+    public static boolean isActive(Level level) {
+        return level.isClientSide ? CollapseCycleClient.active : CollapseSavedData.getOrMake((ServerLevel) level).active();
     }
 }

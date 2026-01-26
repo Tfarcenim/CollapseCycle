@@ -6,6 +6,7 @@ import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
@@ -15,17 +16,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import tfar.collapsecycle.network.S2CSetCollapseInfo;
 
 public class CollapseCycleClient {
 
     public static final ResourceLocation BEAM = CollapseCycle.id("textures/entity/beam.png");
+    static boolean active;
+    static long countdown = 1;
 
     public static void renderBeam(LevelRenderer levelRenderer, PoseStack poseStack, float partialTick, boolean renderBlockOutline, Camera camera) {
         Level level = Minecraft.getInstance().level;
         if (CollapseCycle.corruptible(level.dimension())) {
-            long limit = CollapseCycleConfig.Server.TIME_LIMIT.get();
-            long gameTime = level.getGameTime();
-            if (gameTime >= limit) {
+            if (active && countdown<=0) {
                 Vec3 vec3 = camera.getPosition();
                 double d0 = vec3.x();
                 double d1 = vec3.y();
@@ -51,6 +53,10 @@ public class CollapseCycleClient {
                 poseStack.popPose();
             }
         }
+    }
+
+    public static long getCountdown() {
+        return countdown;
     }
 
     /**
@@ -84,6 +90,14 @@ public class CollapseCycleClient {
             if (alpha > 0) {
                 renderPortalOverlay(Minecraft.getInstance().gui,guiGraphics,alpha);
             }
+        }
+    }
+
+    public static void handle(S2CSetCollapseInfo s2CSetCollapseInfo) {
+        ClientLevel level = Minecraft.getInstance().level;
+        if (level != null) {
+            countdown = s2CSetCollapseInfo.countdown();
+            active =s2CSetCollapseInfo.active();
         }
     }
 }

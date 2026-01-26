@@ -19,6 +19,7 @@ public class ModDatagen {
         generator.addProvider(true,new ModLangProvider(packOutput));
         generator.addProvider(true,new ModRecipeProvider(packOutput));
         generator.addProvider(true,new ModBlockstateProvider(packOutput,existingFileHelper));
+        generator.addProvider(true,new ModItemModelProvider(packOutput,existingFileHelper));
         BlockTagsProvider blockTagsProvider = new ModBlockTagProvider(packOutput,lookupProvider,existingFileHelper);
         generator.addProvider(true,blockTagsProvider);
     }
