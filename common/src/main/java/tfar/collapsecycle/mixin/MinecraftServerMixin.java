@@ -37,6 +37,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import tfar.collapsecycle.MinecraftServerDuck;
+import tfar.collapsecycle.platform.Services;
 
 import java.io.IOException;
 import java.util.List;
@@ -64,6 +65,10 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
     @Shadow protected abstract void waitUntilNextTick();
 
     @Shadow protected abstract void updateMobSpawningFlags();
+
+    @Shadow public abstract boolean isSpawningMonsters();
+
+    @Shadow public abstract boolean isSpawningAnimals();
 
     boolean resetting;
 
@@ -105,7 +110,7 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
         ServerLevel oldServerLevel = overworld();
         try {
 
-            this.nextTickTime = Util.getMillis() + 1L;
+    //        this.nextTickTime = Util.getMillis() + 1L;
 
            // for(ServerLevel serverlevel1 : this.getAllLevels()) {
                 oldServerLevel.getChunkSource().removeTicketsOnClosing();
@@ -114,7 +119,7 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
                 }, false);
            // }
 
-            this.waitUntilNextTick();
+   //         this.waitUntilNextTick();
 
             oldServerLevel.close();
         } catch (IOException e) {
@@ -150,16 +155,16 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
         BlockPos blockpos = newLevel.getSharedSpawnPos();
         chunkprogresslistener.updateSpawnPos(new ChunkPos(blockpos));
         ServerChunkCache serverchunkcache = newLevel.getChunkSource();
-        this.nextTickTime = Util.getMillis();
+      //  this.nextTickTime = Util.getMillis();
         serverchunkcache.addRegionTicket(TicketType.START, new ChunkPos(blockpos), 11, Unit.INSTANCE);
 
-        while(serverchunkcache.getTickingGenerated() != 441) {
+    /*    while(serverchunkcache.getTickingGenerated() != 441) {
             this.nextTickTime = Util.getMillis() + 10L;
             this.waitUntilNextTick();
         }
 
         this.nextTickTime = Util.getMillis() + 10L;
-        this.waitUntilNextTick();
+        this.waitUntilNextTick();*/
 
         /*for(ServerLevel serverlevel1 : this.levels.values()) {
             ForcedChunksSavedData forcedchunkssaveddata = serverlevel1.getDataStorage().get(ForcedChunksSavedData::load, "chunks");
@@ -174,10 +179,11 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
             }
         }*/
 
-        this.nextTickTime = Util.getMillis() + 10L;
-        this.waitUntilNextTick();
+      //  this.nextTickTime = Util.getMillis() + 10L;
+       // this.waitUntilNextTick();
         chunkprogresslistener.stop();
-        this.updateMobSpawningFlags();
+        newLevel.setSpawnSettings(this.isSpawningMonsters(), this.isSpawningAnimals());
+        Services.PLATFORM.markWorldDirty((MinecraftServer) (Object) this);
 
     }
 }

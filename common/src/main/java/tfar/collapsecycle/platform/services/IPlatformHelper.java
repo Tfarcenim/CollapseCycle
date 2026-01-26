@@ -1,6 +1,7 @@
 package tfar.collapsecycle.platform.services;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -56,4 +57,7 @@ public interface IPlatformHelper {
     <MSG extends S2CModPacket> void registerClientPacket(Class<MSG> packetLocation, Function<FriendlyByteBuf,MSG> reader);
     void sendToClient(S2CModPacket msg, ServerPlayer player);
     void sendToServer(C2SModPacket msg);
+
+
+    void markWorldDirty(MinecraftServer server);
 }

@@ -1,6 +1,7 @@
 package tfar.collapsecycle.platform;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -85,5 +86,10 @@ public class ForgePlatformHelper implements IPlatformHelper {
     @Override
     public void sendToServer(C2SModPacket msg) {
         ForgePacketHandler.sendToServer(msg);
+    }
+
+    @Override
+    public void markWorldDirty(MinecraftServer server) {
+        server.markWorldsDirty();
     }
 }

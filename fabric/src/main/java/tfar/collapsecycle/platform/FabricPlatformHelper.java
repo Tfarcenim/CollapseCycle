@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -91,6 +92,11 @@ public class FabricPlatformHelper implements IPlatformHelper {
         FriendlyByteBuf buf = PacketByteBufs.create();
         msg.write(buf);
         ClientPlayNetworking.send(PacketHandler.packet(msg.getClass()), buf);
+    }
+
+    @Override
+    public void markWorldDirty(MinecraftServer server) {
+
     }
 
 
