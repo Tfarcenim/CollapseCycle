@@ -15,12 +15,15 @@ public class ModDatagen {
         DataGenerator generator = event.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-        generator.addProvider(true,new ModDatapackRegistryProvider(packOutput,lookupProvider));
+        ModDatapackRegistryProvider provider = new ModDatapackRegistryProvider(packOutput,lookupProvider);
+        generator.addProvider(true,provider);
+        lookupProvider = provider.getRegistryProvider();
         generator.addProvider(true,new ModLangProvider(packOutput));
         generator.addProvider(true,new ModRecipeProvider(packOutput));
         generator.addProvider(true,new ModBlockstateProvider(packOutput,existingFileHelper));
         generator.addProvider(true,new ModItemModelProvider(packOutput,existingFileHelper));
         BlockTagsProvider blockTagsProvider = new ModBlockTagProvider(packOutput,lookupProvider,existingFileHelper);
         generator.addProvider(true,blockTagsProvider);
+        generator.addProvider(true,new ModDamageTypeTagProvider(packOutput,lookupProvider,existingFileHelper));
     }
 }

@@ -23,6 +23,6 @@ public class ModBlockstateProvider extends BlockStateProvider {
 
     protected void flower(Block block, ResourceLocation texture) {
         simpleBlock(block,models().cross("sparkflower",texture));
-        itemModels().singleTexture("sparkflower",mcLoc("item/generated"),texture);
+        itemModels().singleTexture("sparkflower",mcLoc("item/generated"),"layer0",texture);
     }
 }

@@ -1,4 +1,4 @@
-// 1.20.1	2026-01-26T00:15:52.557605	Block States: collapsecycle
+// 1.20.1	2026-01-27T14:13:07.5191745	Block States: collapsecycle
 29bb9b577414d0f39994309f2a1356fcb1bf54a8 assets/collapsecycle/blockstates/destabilizer.json
 04d4fa049953021d7c3a88363c8982a03d7683c2 assets/collapsecycle/blockstates/nullstone.json
 e1e830f46392cb53f5401ea2e255e2449889af93 assets/collapsecycle/blockstates/sparkflower.json
@@ -7,4 +7,4 @@ aa5e0c4f6cff2dc0c42d201dd52b95bb9e31b40d assets/collapsecycle/models/block/nulls
 d2b45a0cc7d74f9b1a8ab30193eb5a7312a24068 assets/collapsecycle/models/block/sparkflower.json
 37159e6369828402ddf461e078f8d38555d985bb assets/collapsecycle/models/item/destabilizer.json
 af327f62b306715796c3455bcbab28acb2ebac5c assets/collapsecycle/models/item/nullstone.json
-1d9109deac37100def26a7f18fa4e230d2e84291 assets/collapsecycle/models/item/sparkflower.json
+c28413a91c5f9c9881202a7d8533d961fc2060dc assets/collapsecycle/models/item/sparkflower.json

@@ -1,4 +1,5 @@
-// 1.20.1	2026-01-17T15:41:38.2060408	Tags for minecraft:block mod id collapsecycle
+// 1.20.1	2026-01-27T16:38:21.7379756	Tags for minecraft:block mod id collapsecycle
+bdac790820a93a6ec22d9413b9fbd59a8092b08a data/collapsecycle/tags/blocks/sparkflower_placeable_on.json
 47d25be0ffe694db63a5abe4b238396220909c7a data/minecraft/tags/blocks/mineable/pickaxe.json
 e72606107f9a2acf48ad5db39dc6e0e8f0e050fc data/minecraft/tags/blocks/needs_iron_tool.json
 d41794e20e607629cce60730047510c8ff501a15 data/minecraft/tags/blocks/small_flowers.json

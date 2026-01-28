@@ -2,6 +2,8 @@ package tfar.collapsecycle;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
+import it.unimi.dsi.fastutil.floats.FloatConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -9,14 +11,20 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import tfar.collapsecycle.init.ModBlocks;
 import tfar.collapsecycle.network.S2CSetCollapseInfo;
+
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class CollapseCycleClient {
 
@@ -82,7 +90,7 @@ public class CollapseCycleClient {
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    public static void renderBeamOverlay(GuiGraphics guiGraphics, float v) {
+    public static void renderPortalOverlay(GuiGraphics guiGraphics, float v) {
         Player player = Minecraft.getInstance().player;
         if (player != null) {
             int ticksInBeam = ((PlayerDuck)player).timeInBeam();
@@ -93,11 +101,28 @@ public class CollapseCycleClient {
         }
     }
 
+    public static void renderTypes(BiConsumer<Block, RenderType> consumer) {
+        consumer.accept(ModBlocks.SPARKFLOWER.get(),RenderType.cutout());
+    }
+
     public static void handle(S2CSetCollapseInfo s2CSetCollapseInfo) {
         ClientLevel level = Minecraft.getInstance().level;
         if (level != null) {
             countdown = s2CSetCollapseInfo.countdown();
             active =s2CSetCollapseInfo.active();
         }
+    }
+
+    public static void setupCameraAngles(float pitch, float yaw, float roll, FloatConsumer pitchSetter, FloatConsumer yawSetter,
+                                         FloatConsumer rollSetter) {
+        double instability =  CollapseCycle.instability(Minecraft.getInstance().level);
+        double shakiness = 1/32d * instability;
+        pitchSetter.accept(shake(pitch,shakiness));
+        yawSetter.accept(shake(yaw,shakiness));
+        rollSetter.accept(shake(roll,shakiness));
+    }
+
+    public static float shake(float angle,double shakiness) {
+        return (float) (angle + (2 * Math.random()-1) * (shakiness * 360));
     }
 }

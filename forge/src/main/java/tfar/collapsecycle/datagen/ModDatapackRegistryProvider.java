@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import tfar.collapsecycle.Constants;
 import tfar.collapsecycle.NullDimension;
+import tfar.collapsecycle.init.ModDamageSource;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -15,6 +16,7 @@ public class ModDatapackRegistryProvider extends DatapackBuiltinEntriesProvider 
 
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
             .add(Registries.DIMENSION_TYPE, NullDimension::bootstrapType)
+            .add(Registries.DAMAGE_TYPE, ModDamageSource::bootstrap)
             .add(Registries.LEVEL_STEM, NullDimension::bootstrapStem);
 
     public ModDatapackRegistryProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

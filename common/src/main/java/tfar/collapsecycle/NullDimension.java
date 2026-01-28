@@ -1,5 +1,6 @@
 package tfar.collapsecycle;
 
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -29,11 +30,12 @@ public class NullDimension {
     public static final ResourceKey<Level> DIMENSION = ResourceKey.create(Registries.DIMENSION, ID);
     public static final ResourceKey<LevelStem> LEVEL_STEM = ResourceKey.create(Registries.LEVEL_STEM, ID);
     public static final ResourceKey<DimensionType> DIMENSION_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,ID);
+    public static final DimensionSpecialEffects SPECIAL_EFFECTS = new NullDimensionEffect(Float.NaN,true, DimensionSpecialEffects.SkyType.NONE,false,false);
 
     public static void bootstrapType(BootstapContext<DimensionType> context) {
-        context.register(DIMENSION_TYPE,new DimensionType(OptionalLong.of(6000),true,false,false,false,
+        context.register(DIMENSION_TYPE,new DimensionType(OptionalLong.of(6000),false,false,false,false,
                 1,true,true,0,256,256,
-                BlockTags.INFINIBURN_OVERWORLD, BuiltinDimensionTypes.OVERWORLD_EFFECTS,.1f,
+                BlockTags.INFINIBURN_OVERWORLD, NullDimension.ID,0,
                 new DimensionType.MonsterSettings(false, true, UniformInt.of(0, 7), 0)));
     }
 

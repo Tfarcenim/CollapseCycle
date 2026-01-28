@@ -99,6 +99,7 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
 
                 this.storageSource, derivedleveldata, Level.NETHER, levelstem, chunkprogresslistener, flag, j, list, true, null);
         levels.put(Level.NETHER,newLevel);
+        Services.PLATFORM.markWorldDirty((MinecraftServer) (Object) this);
     }
 
     /**

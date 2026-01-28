@@ -7,7 +7,9 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
@@ -15,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
 import tfar.collapsecycle.init.ModBlocks;
+import tfar.collapsecycle.init.ModDamageSource;
 import tfar.collapsecycle.init.ModItems;
 import tfar.collapsecycle.network.S2CModPacket;
 import tfar.collapsecycle.network.S2CSetCollapseInfo;
@@ -78,8 +81,14 @@ public class CollapseCycle {
         }
     }
 
+    public static void onDeath(LivingEntity livingEntity, DamageSource source) {
+        if (livingEntity instanceof ServerPlayer player && source.is(ModDamageSource.COLLAPSE)) {
+            player.setRespawnPosition(NullDimension.DIMENSION,new BlockPos(0,1,0),0,true,false);
+            Services.PLATFORM.sendToClient(new S2CSetCollapseInfo(false,CollapseCycleConfig.Server.TIME_LIMIT.get()),player);
+        }
+    }
+
     public static <MSG extends S2CModPacket> void sendToPlayersInLevel(ServerLevel level,MSG msg) {
-        ResourceKey<Level> dim = level.dimension();
         for (ServerPlayer player : level.players()) {
             Services.PLATFORM.sendToClient(msg, player);
         }
@@ -102,6 +111,10 @@ public class CollapseCycle {
                 double x = Math.abs(pos.x);
                 double z = Math.abs(pos.z);
 
+                if (!level.isClientSide &&(x > corruptionPos || z > corruptionPos)) {
+                    player.hurt(level.damageSources().source(ModDamageSource.COLLAPSE),1_000_000_000_000f);
+                }
+
 
                 PlayerDuck playerDuck = (PlayerDuck) player;
                 if (x < 2 && z < 2) {
@@ -116,7 +129,6 @@ public class CollapseCycle {
                             Services.PLATFORM.sendToClient(new S2CSetCollapseInfo(false,CollapseCycleConfig.Server.TIME_LIMIT.get()),serverPlayer);
                             playerDuck.reset();
                         }
-                        //player.server.execute(() -> player.changeDimension(serverLevel));
                     }
                     playerDuck.setTimeInBeam(timeinBeam + 1);
                 } else {
@@ -131,15 +143,20 @@ public class CollapseCycle {
     }
 
     public static int getCorruptionPos(Level level) {
-        long countdown = getCountdown(level);
         int worldborderPos = level.getWorldBorder().getAbsoluteMaxSize();
+        return (int) (worldborderPos * ( 1 - instability(level)));
+    }
+
+    public static double instability(Level level) {
+        if (!corruptible(level.dimension())) return 0;
         long collapseEnd = CollapseCycleConfig.Server.TIME_TO_0_0.get();
-        if (countdown > 0) {
-            return worldborderPos;
-        } else if (countdown < -collapseEnd) {
-            return worldborderPos;
+        long countdown = getCountdown(level);
+        if (countdown>=0) {
+            return 0;
+        }else if (countdown > -collapseEnd) {
+            return -(double) countdown / collapseEnd;
         }
-        return 0;
+        return 1;
     }
 
     static void beginCorruption(ServerLevel level) {
@@ -155,7 +172,7 @@ public class CollapseCycle {
         if (dimension == NullDimension.DIMENSION) {
             List<ServerPlayer> remainingPlayers = server.overworld().players();
             if (remainingPlayers.isEmpty()) {
-             //   server.execute(() -> SpaceTimeManager.reset(server));
+                server.execute(() -> SpaceTimeManager.reset(server));
             }
         }
     }

@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.CollapseCycleConfig;
+import tfar.collapsecycle.platform.Services;
 
 import java.util.List;
 
@@ -19,8 +20,11 @@ public class CollapseClockItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
         if (level != null) {
-            tooltipComponents.add(Component.literal("Time remaining: " + (CollapseCycle.getCountdown(level))));
-            tooltipComponents.add(Component.literal("Active: " + (CollapseCycle.isActive(level))));
+            tooltipComponents.add(Component.literal("Time remaining: " + CollapseCycle.getCountdown(level)));
+            tooltipComponents.add(Component.literal("Active: " + CollapseCycle.isActive(level)));
+            if (Services.PLATFORM.isDevelopmentEnvironment()) {
+                tooltipComponents.add(Component.literal("Collapse Location: "+CollapseCycle.getCorruptionPos(level)));
+            }
         }
     }
 }

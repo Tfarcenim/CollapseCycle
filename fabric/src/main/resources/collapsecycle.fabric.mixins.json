@@ -9,6 +9,8 @@
     "ServerPlayerMixinFabric"
   ],
   "client": [
+    "CameraAccessFabric",
+    "GameRendererMixinFabric",
     "LevelRendererMixinFabric"
   ],
   "server": [

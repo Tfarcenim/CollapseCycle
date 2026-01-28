@@ -8,9 +8,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
@@ -49,7 +51,12 @@ public class CollapseCycleForge {
         MinecraftForge.EVENT_BUS.addListener(this::fallingCorrupt);
         MinecraftForge.EVENT_BUS.addListener(this::dimChange);
         MinecraftForge.EVENT_BUS.addListener(this::commands);
+        MinecraftForge.EVENT_BUS.addListener(this::onDeath);
         CollapseCycle.init();
+    }
+
+    void onDeath(LivingDeathEvent event){
+        CollapseCycle.onDeath(event.getEntity(),event.getSource());
     }
 
     void dimChange(PlayerEvent.PlayerChangedDimensionEvent event) {

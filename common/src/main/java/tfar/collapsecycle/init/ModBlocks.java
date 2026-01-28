@@ -12,6 +12,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import tfar.collapsecycle.block.CorruptBlock;
 import tfar.collapsecycle.block.DestabilizerBlock;
+import tfar.collapsecycle.block.SparkFlowerBlock;
 import tfar.collapsecycle.platform.Services;
 
 import java.util.function.Supplier;
@@ -27,7 +28,7 @@ public class ModBlocks {
             Suppliers.memoize(() -> new CorruptBlock(BlockBehaviour.Properties.of().requiresCorrectToolForDrops())));
 
     public static final Supplier<FlowerBlock> SPARKFLOWER = Services.PLATFORM.blockSupplier("sparkflower",
-            Suppliers.memoize(() -> new FlowerBlock(MobEffects.SATURATION,1200,BlockBehaviour.Properties.of()
+            Suppliers.memoize(() -> new SparkFlowerBlock(MobEffects.SATURATION,1200,BlockBehaviour.Properties.of()
                     .lightLevel(s -> 14)
                     .mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)
