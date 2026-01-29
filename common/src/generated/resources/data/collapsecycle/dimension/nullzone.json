@@ -3,9 +3,9 @@
   "generator": {
     "type": "minecraft:flat",
     "settings": {
-      "biome": "minecraft:the_void",
-      "features": false,
-      "lakes": false,
+      "biome": "collapsecycle:nullzone",
+      "features": true,
+      "lakes": true,
       "layers": [
         {
           "block": "minecraft:bedrock",

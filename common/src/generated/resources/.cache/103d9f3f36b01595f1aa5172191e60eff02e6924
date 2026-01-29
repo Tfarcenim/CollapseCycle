@@ -1,4 +1,9 @@
-// 1.20.1	2026-01-27T15:34:49.2938913	Registries
+// 1.20.1	2026-01-29T01:22:14.9388467	Registries
 28d87d9220ee56cb8841478b839d4c1c091e9cae data/collapsecycle/damage_type/collapse.json
-cfb325aecf602773f3bca2f3e53124c21565dcc1 data/collapsecycle/dimension/nullzone.json
+90fe979f5bc6752ca2404c8720b6c465dc468999 data/collapsecycle/dimension/nullzone.json
 8a515a034c50a71f11bb234cfedda3c22114048b data/collapsecycle/dimension_type/nullzone.json
+03d506f78903cd057c2058e1853e2c31536f7984 data/collapsecycle/worldgen/biome/nullzone.json
+3bc868c7bc764c90b06fd8863326e6be4e6d7cb3 data/collapsecycle/worldgen/configured_feature/flower_nullzone.json
+94d9ca631042b0643762b7d777a3c5f07f101452 data/collapsecycle/worldgen/configured_feature/lake_water.json
+9d430e79c805ebaf2251749774c8ef4f96aba8f7 data/collapsecycle/worldgen/placed_feature/flower_nullzone.json
+3bc2a3c2d1700f342f6221536a8286c6a1372702 data/collapsecycle/worldgen/placed_feature/lake_water.json

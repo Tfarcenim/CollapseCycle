@@ -26,5 +26,7 @@ public class ModDatagen {
         generator.addProvider(true,blockTagsProvider);
         generator.addProvider(true,new ModDamageTypeTagProvider(packOutput,lookupProvider,existingFileHelper));
         generator.addProvider(true,ModLootTableProvider.create(packOutput));
+
+        generator.addProvider(true,new ModBiomeTagsProvider(packOutput,lookupProvider,existingFileHelper));
     }
 }
