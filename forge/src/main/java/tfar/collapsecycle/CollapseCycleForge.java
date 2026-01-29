@@ -1,19 +1,25 @@
 package tfar.collapsecycle;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.level.BlockEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -52,7 +58,25 @@ public class CollapseCycleForge {
         MinecraftForge.EVENT_BUS.addListener(this::dimChange);
         MinecraftForge.EVENT_BUS.addListener(this::commands);
         MinecraftForge.EVENT_BUS.addListener(this::onDeath);
+        MinecraftForge.EVENT_BUS.addListener(this::onCropsGrow);
+        MinecraftForge.EVENT_BUS.addListener(this::onUseBonemeal);
         CollapseCycle.init();
+    }
+
+    void onCropsGrow(BlockEvent.CropGrowEvent.Pre event) {
+        Level level = (Level) event.getLevel();
+        if (!CollapseCycle.growCrops(level)) {
+            event.setResult(Event.Result.DENY);
+        }
+    }
+
+    void onUseBonemeal(BonemealEvent event) {
+        Level level = event.getLevel();
+        if (!CollapseCycle.canUseBonemeal(level)) {
+            if (level.isClientSide)
+                event.getEntity().sendSystemMessage(Component.literal("Bonemeal doesn't work in this realm").withStyle(ChatFormatting.RED));
+            event.setCanceled(true);
+        }
     }
 
     void onDeath(LivingDeathEvent event){

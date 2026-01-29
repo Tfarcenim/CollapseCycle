@@ -42,6 +42,8 @@ import tfar.collapsecycle.platform.Services;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.OptionalLong;
 import java.util.concurrent.Executor;
 
 @Mixin(MinecraftServer.class)
@@ -132,6 +134,8 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
         if (serverleveldata instanceof PrimaryLevelData primaryLevelData) {
             primaryLevelData.setDayTime(0);
             primaryLevelData.setGameTime(0);
+            WorldOptions worldOptions = primaryLevelData.worldGenOptions().withSeed(OptionalLong.empty());
+            ((PrimaryLevelDataAccess)primaryLevelData).setWorldOptions(worldOptions);
         }
 
         boolean flag = this.worldData.isDebugWorld();

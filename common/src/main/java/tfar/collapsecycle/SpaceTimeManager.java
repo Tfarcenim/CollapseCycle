@@ -1,25 +1,14 @@
 package tfar.collapsecycle;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ProgressListener;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import org.apache.commons.io.FileUtils;
 import tfar.collapsecycle.platform.Services;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 
 public class SpaceTimeManager {
@@ -37,6 +26,7 @@ public class SpaceTimeManager {
     private static final File currentSaveRootDirectory = Services.PLATFORM.getSaveDirectory().toFile();
 
     public static void reset(MinecraftServer server) {
+        CollapseCycleConfig.Server.CURRENT_SEED.set(server.overworld().random.nextLong());
         try {
             File file = server.storageSource.levelDirectory.path().toFile();
             delete(file);

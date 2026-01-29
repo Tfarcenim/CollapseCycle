@@ -163,6 +163,17 @@ public class CollapseCycle {
 
     }
 
+    public static boolean growCrops(Level level) {
+        if (level.dimension() == NullDimension.DIMENSION) {
+            return level.random.nextDouble() < .25;
+        }
+        return true;
+    }
+
+    public static boolean canUseBonemeal(Level level) {
+        return level.dimension() != NullDimension.DIMENSION;
+    }
+
     public static ResourceLocation id(String key) {
         return new ResourceLocation(Constants.MOD_ID, key);
     }

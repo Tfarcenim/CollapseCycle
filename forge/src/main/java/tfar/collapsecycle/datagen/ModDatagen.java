@@ -25,5 +25,6 @@ public class ModDatagen {
         BlockTagsProvider blockTagsProvider = new ModBlockTagProvider(packOutput,lookupProvider,existingFileHelper);
         generator.addProvider(true,blockTagsProvider);
         generator.addProvider(true,new ModDamageTypeTagProvider(packOutput,lookupProvider,existingFileHelper));
+        generator.addProvider(true,ModLootTableProvider.create(packOutput));
     }
 }
