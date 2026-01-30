@@ -20,6 +20,7 @@
         ],
         "client": ["tfar.collapsecycle.CollapseCycleClientFabric"]
     },
+    "accessWidener": "collapsecycle.accesswidener",
     "mixins": [
         "${mod_id}.mixins.json",
         "${mod_id}.fabric.mixins.json"

@@ -30,13 +30,4 @@ public abstract class ServerLevelMixin extends Level {
         super(levelData, dimension, registryAccess, dimensionTypeRegistration, profiler, isClientSide, isDebug, biomeZoomSeed, maxChainedNeighborUpdates);
     }
 
-    @Inject(method = "tickTime",at = @At("HEAD"), cancellable = true)
-    private void noTickWhenEmpty(CallbackInfo ci) {
-        if (this.dimension() == Level.OVERWORLD) {
-            MinecraftServer server = this.server;
-            if (players().isEmpty() && server.getLevel(Level.NETHER).players().isEmpty()) {
-                ci.cancel();
-            }
-        }
-    }
 }
