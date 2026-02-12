@@ -9,6 +9,7 @@ import tfar.collapsecycle.Constants;
 import tfar.collapsecycle.NullDimension;
 import tfar.collapsecycle.init.ModDamageSource;
 import tfar.collapsecycle.init.ModFeatures;
+import tfar.collapsecycle.init.ModStructures;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -20,6 +21,7 @@ public class ModDatapackRegistryProvider extends DatapackBuiltinEntriesProvider 
             .add(Registries.BIOME, NullDimension::bootstrapBiome)
             .add(Registries.CONFIGURED_FEATURE, ModFeatures::bootstrapConfiguredFeatures)
             .add(Registries.PLACED_FEATURE, ModFeatures::bootstrapPlacedFeatures)
+            .add(Registries.STRUCTURE, ModStructures::bootstrap)
 
             .add(Registries.DAMAGE_TYPE, ModDamageSource::bootstrap)
             .add(Registries.LEVEL_STEM, NullDimension::bootstrapStem);

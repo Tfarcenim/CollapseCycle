@@ -1,6 +1,7 @@
-// 1.20.1	2026-01-27T14:13:07.5191745	Block States: collapsecycle
+// 1.20.1	2026-02-04T18:16:49.5608128	Block States: collapsecycle
 29bb9b577414d0f39994309f2a1356fcb1bf54a8 assets/collapsecycle/blockstates/destabilizer.json
 04d4fa049953021d7c3a88363c8982a03d7683c2 assets/collapsecycle/blockstates/nullstone.json
+5495f2aa586fcd7b5df99f8e305f3457a81d2c26 assets/collapsecycle/blockstates/overworld_portal.json
 e1e830f46392cb53f5401ea2e255e2449889af93 assets/collapsecycle/blockstates/sparkflower.json
 65326ca6f07486b2b109b714403bef595178db52 assets/collapsecycle/models/block/destabilizer.json
 aa5e0c4f6cff2dc0c42d201dd52b95bb9e31b40d assets/collapsecycle/models/block/nullstone.json

@@ -19,6 +19,7 @@ public class ModBlockstateProvider extends BlockStateProvider {
         simpleBlockWithItem(ModBlocks.NULLSTONE.get(),cubeAll(ModBlocks.NULLSTONE.get()));
         simpleBlockWithItem(ModBlocks.DESTABILIZER.get(),models().cubeAll("destabilizer",mcLoc("block/lodestone_side")));
         flower(ModBlocks.SPARKFLOWER.get(),mcLoc("block/dandelion"));
+        simpleBlock(ModBlocks.OVERWORLD_PORTAL.get(),models().getExistingFile(modLoc("block/overworld_portal")));
     }
 
     protected void flower(Block block, ResourceLocation texture) {

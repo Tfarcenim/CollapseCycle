@@ -103,6 +103,7 @@ public class CollapseCycleClient {
 
     public static void renderTypes(BiConsumer<Block, RenderType> consumer) {
         consumer.accept(ModBlocks.SPARKFLOWER.get(),RenderType.cutout());
+        consumer.accept(ModBlocks.OVERWORLD_PORTAL.get(),RenderType.translucent());
     }
 
     public static void handle(S2CSetCollapseInfo s2CSetCollapseInfo) {

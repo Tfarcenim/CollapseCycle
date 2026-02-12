@@ -23,6 +23,7 @@ public class ModBlockLoot extends BlockLootSubProvider {
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return List.of(ModBlocks.CORRUPT.get(),ModBlocks.DESTABILIZER.get(),ModBlocks.NULLSTONE.get(),ModBlocks.SPARKFLOWER.get());
+        return List.of(ModBlocks.CORRUPT.get(),ModBlocks.DESTABILIZER.get(),ModBlocks.NULLSTONE.get(),
+                ModBlocks.SPARKFLOWER.get());
     }
 }

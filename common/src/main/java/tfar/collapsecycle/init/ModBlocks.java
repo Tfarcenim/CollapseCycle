@@ -12,6 +12,7 @@ import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import tfar.collapsecycle.block.CorruptBlock;
 import tfar.collapsecycle.block.DestabilizerBlock;
+import tfar.collapsecycle.block.OverworldPortalBlock;
 import tfar.collapsecycle.block.SparkFlowerBlock;
 import tfar.collapsecycle.platform.Services;
 
@@ -33,6 +34,10 @@ public class ModBlocks {
                     .mapColor(MapColor.PLANT).noCollission().instabreak().sound(SoundType.GRASS)
                     .offsetType(BlockBehaviour.OffsetType.XZ).pushReaction(PushReaction.DESTROY)
             )));
+
+    public static final Supplier<OverworldPortalBlock> OVERWORLD_PORTAL = Services.PLATFORM.blockSupplier("overworld_portal",Suppliers.memoize(
+            () -> new OverworldPortalBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).noCollission()
+                    .lightLevel(s -> 15).strength(-1.0F, 3600000.0F).noLootTable().pushReaction(PushReaction.BLOCK))));
 
     public static void init() {
 
