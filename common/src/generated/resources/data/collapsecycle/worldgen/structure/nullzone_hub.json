@@ -1,0 +1,6 @@
+{
+  "type": "collapsecycle:one_time_structure",
+  "biomes": "collapsecycle:nullzone",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}
