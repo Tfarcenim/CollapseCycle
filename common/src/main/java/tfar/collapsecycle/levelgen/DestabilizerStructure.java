@@ -15,19 +15,25 @@ import tfar.collapsecycle.init.Misc;
 
 import java.util.Optional;
 
-public class OneTimeStructure extends SinglePieceStructure {
+public class DestabilizerStructure extends SinglePieceStructure {
 
-    public static final Codec<OneTimeStructure> CODEC = simpleCodec(OneTimeStructure::new);
+    public static final Codec<DestabilizerStructure> CODEC = simpleCodec(DestabilizerStructure::new);
 
-    public OneTimeStructure(StructureSettings settings) {
-        super((random, minBlockX, minBlockZ) -> new Piece(new CompoundTag()), 12, 15, settings);
+
+    public DestabilizerStructure(StructureSettings settings) {
+        super(Piece::new, 12, 15, settings);
     }
 
-    public static class Piece extends StructurePiece{
+    public static class Piece extends ScatteredFeaturePiece {
 
         public Piece(CompoundTag tag) {
-            super(Misc.ONE_TIME_STRUCTURE_PIECE, tag);
+            super(Misc.DESTABILIZER_PIECE, tag);
         }
+
+        public Piece(RandomSource random, int x, int z) {
+            super(Misc.DESTABILIZER_PIECE, x, 64, z, 12, 10, 15, getRandomHorizontalDirection(random));
+        }
+
 
         @Override
         protected void addAdditionalSaveData(StructurePieceSerializationContext context, CompoundTag tag) {
@@ -42,6 +48,6 @@ public class OneTimeStructure extends SinglePieceStructure {
 
     @Override
     public StructureType<?> type() {
-        return Misc.ONE_TIME_STRUCTURE;
+        return Misc.DESTABILIZER;
     }
 }

@@ -1,5 +1,5 @@
 {
-  "type": "collapsecycle:one_time_structure",
+  "type": "collapsecycle:destabilizer",
   "biomes": "#minecraft:is_overworld",
   "spawn_overrides": {},
   "step": "surface_structures"

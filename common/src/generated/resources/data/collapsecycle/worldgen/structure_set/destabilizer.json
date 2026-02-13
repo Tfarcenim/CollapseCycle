@@ -1,0 +1,11 @@
+{
+  "placement": {
+    "type": "minecraft:one_time_structure"
+  },
+  "structures": [
+    {
+      "structure": "collapsecycle:destabilizer",
+      "weight": 1
+    }
+  ]
+}

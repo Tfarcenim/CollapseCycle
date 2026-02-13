@@ -1,6 +1,7 @@
 package tfar.collapsecycle;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -60,6 +61,9 @@ public class CollapseCycleForge {
         MinecraftForge.EVENT_BUS.addListener(this::onDeath);
         MinecraftForge.EVENT_BUS.addListener(this::onCropsGrow);
         MinecraftForge.EVENT_BUS.addListener(this::onUseBonemeal);
+        ((MappedRegistry<?>)BuiltInRegistries.STRUCTURE_PIECE).unfreeze();
+        ((MappedRegistry<?>)BuiltInRegistries.STRUCTURE_TYPE).unfreeze();
+        ((MappedRegistry<?>)BuiltInRegistries.STRUCTURE_PLACEMENT).unfreeze();
         CollapseCycle.init();
     }
 

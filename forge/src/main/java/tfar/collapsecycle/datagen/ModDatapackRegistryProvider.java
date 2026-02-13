@@ -22,6 +22,7 @@ public class ModDatapackRegistryProvider extends DatapackBuiltinEntriesProvider 
             .add(Registries.CONFIGURED_FEATURE, ModFeatures::bootstrapConfiguredFeatures)
             .add(Registries.PLACED_FEATURE, ModFeatures::bootstrapPlacedFeatures)
             .add(Registries.STRUCTURE, ModStructures::bootstrap)
+            .add(Registries.STRUCTURE_SET, ModStructures::bootstrapStructureSet)
 
             .add(Registries.DAMAGE_TYPE, ModDamageSource::bootstrap)
             .add(Registries.LEVEL_STEM, NullDimension::bootstrapStem);

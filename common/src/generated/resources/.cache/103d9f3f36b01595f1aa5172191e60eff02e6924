@@ -1,4 +1,4 @@
-// 1.20.1	2026-02-12T03:33:40.8354334	Registries
+// 1.20.1	2026-02-12T18:42:41.342001	Registries
 28d87d9220ee56cb8841478b839d4c1c091e9cae data/collapsecycle/damage_type/collapse.json
 90fe979f5bc6752ca2404c8720b6c465dc468999 data/collapsecycle/dimension/nullzone.json
 8a515a034c50a71f11bb234cfedda3c22114048b data/collapsecycle/dimension_type/nullzone.json
@@ -7,5 +7,7 @@
 94d9ca631042b0643762b7d777a3c5f07f101452 data/collapsecycle/worldgen/configured_feature/lake_water.json
 9d430e79c805ebaf2251749774c8ef4f96aba8f7 data/collapsecycle/worldgen/placed_feature/flower_nullzone.json
 3bc2a3c2d1700f342f6221536a8286c6a1372702 data/collapsecycle/worldgen/placed_feature/lake_water.json
-3c6a474879dec3cb72929455e5713e086b5a6c3e data/collapsecycle/worldgen/structure/destabilizer.json
+c18da53d51201a0fc9c67d34a2675f7ee77db5f2 data/collapsecycle/worldgen/structure/destabilizer.json
 2aee51890e86cd4c9e43ca525c76d77375bd6561 data/collapsecycle/worldgen/structure/nullzone_hub.json
+cd27624819dff0c897730668bdbd86485a6c910e data/collapsecycle/worldgen/structure_set/destabilizer.json
+69b51513ba1cc3fd71b21f68dc6d10faf06568c4 data/collapsecycle/worldgen/structure_set/one_time_structure.json

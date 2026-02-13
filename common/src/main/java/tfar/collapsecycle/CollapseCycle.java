@@ -16,6 +16,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
+import tfar.collapsecycle.init.Misc;
 import tfar.collapsecycle.init.ModBlocks;
 import tfar.collapsecycle.init.ModDamageSource;
 import tfar.collapsecycle.init.ModItems;
@@ -47,6 +48,7 @@ public class CollapseCycle {
         // the platform specific approach.
         ModBlocks.init();
         ModItems.init();
+        Misc.init();
     }
 
     public static final GameRules.Key<GameRules.BooleanValue> ACTIVE = GameRules.register("collapsecycle:collapse_active",
