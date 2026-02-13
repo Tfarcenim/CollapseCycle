@@ -47,7 +47,7 @@ public class ModStructures {
 
         context.register(Misc.DESTABILIZER_SET,
                 new StructureSet(holdergetter.getOrThrow(DESTABILIZER),
-                        OneTimeStructurePlacement.INSTANCE));
+                        new RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 14357619)));
 
     }
 

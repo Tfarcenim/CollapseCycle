@@ -7,11 +7,17 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplateManager;
+import tfar.collapsecycle.Constants;
 import tfar.collapsecycle.init.Misc;
+import tfar.collapsecycle.init.ModStructures;
 
 import java.util.Optional;
 
@@ -42,7 +48,13 @@ public class DestabilizerStructure extends SinglePieceStructure {
 
         @Override
         public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator, RandomSource random, BoundingBox box, ChunkPos chunkPos, BlockPos pos) {
-
+            StructureTemplateManager structuretemplatemanager = level.getLevel().getServer().getStructureManager();
+            StructureTemplate structuretemplate = structuretemplatemanager.getOrCreate(ModStructures.DESTABILIZER.location());
+            StructurePlaceSettings structureplacesettings = new StructurePlaceSettings().setBoundingBox(box).setRandom(random);
+            boolean b = structuretemplate.placeInWorld(level, pos, pos, structureplacesettings, random, 2);
+            if (b) {
+                Constants.LOG.info("Placed destabilizer");
+            }
         }
     }
 
