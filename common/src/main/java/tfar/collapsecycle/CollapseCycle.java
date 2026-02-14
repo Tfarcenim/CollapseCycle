@@ -83,9 +83,11 @@ public class CollapseCycle {
         }
     }
 
+    public static final BlockPos NULLZONE_SPAWN = new BlockPos(0,3,0);
+
     public static void onDeath(LivingEntity livingEntity, DamageSource source) {
         if (livingEntity instanceof ServerPlayer player && source.is(ModDamageSource.COLLAPSE)) {
-            player.setRespawnPosition(NullDimension.DIMENSION,new BlockPos(0,1,0),0,true,false);
+            player.setRespawnPosition(NullDimension.DIMENSION,NULLZONE_SPAWN,0,true,false);
             Services.PLATFORM.sendToClient(new S2CSetCollapseInfo(false,CollapseCycleConfig.Server.TIME_LIMIT.get()),player);
         }
     }
@@ -127,7 +129,8 @@ public class CollapseCycle {
                             return;
                         }
                         if (timeinBeam >= DELAY) {
-                            serverPlayer.teleportTo(serverLevel, 0, 2, 0, 0, 0);
+                            serverPlayer.teleportTo(serverLevel, NULLZONE_SPAWN.getX()+.5, NULLZONE_SPAWN.getY(),
+                                    NULLZONE_SPAWN.getZ()+.5, 0, 0);
                             Services.PLATFORM.sendToClient(new S2CSetCollapseInfo(false,CollapseCycleConfig.Server.TIME_LIMIT.get()),serverPlayer);
                             playerDuck.reset();
                         }

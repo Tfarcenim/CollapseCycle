@@ -19,7 +19,7 @@ public class OneTimeStructurePlacement extends StructurePlacement {
 
     @Override
     protected boolean isPlacementChunk(ChunkGeneratorStructureState structureState, int x, int z) {
-        return x == 0 && z == 0;
+        return x == -1 && z == -1;
     }
 
     @Override

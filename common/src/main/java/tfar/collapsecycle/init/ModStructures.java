@@ -12,9 +12,6 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
-import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
-import net.minecraft.world.level.levelgen.structure.structures.DesertPyramidStructure;
-import net.minecraft.world.level.levelgen.structure.structures.JungleTempleStructure;
 import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.NullDimension;
 import tfar.collapsecycle.levelgen.DestabilizerStructure;
@@ -47,7 +44,7 @@ public class ModStructures {
 
         context.register(Misc.DESTABILIZER_SET,
                 new StructureSet(holdergetter.getOrThrow(DESTABILIZER),
-                        new RandomSpreadStructurePlacement(32, 8, RandomSpreadType.LINEAR, 14357619)));
+                        new RandomSpreadStructurePlacement(16, 8, RandomSpreadType.LINEAR, 14357619)));
 
     }
 
