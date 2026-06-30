@@ -5,12 +5,16 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
+import tfar.collapsecycle.init.ModSounds;
 import tfar.collapsecycle.network.PacketHandler;
 
 public class CollapseCycleFabric implements ModInitializer {
@@ -39,6 +43,9 @@ public class CollapseCycleFabric implements ModInitializer {
         });
 
         PacketHandler.registerPackets();
+        Registry.register(BuiltInRegistries.SOUND_EVENT,CollapseCycle.id("collapse_start"),ModSounds.COLLAPSE_START);
+        Registry.register(BuiltInRegistries.SOUND_EVENT,CollapseCycle.id("unnatural_collapse_start"),ModSounds.UNNATURAL_COLLAPSE_START);
+
     }
 
     public static boolean onCropsGrowPre(Level level, BlockPos pos, BlockState state, boolean def) {

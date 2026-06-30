@@ -1,7 +1,6 @@
-package tfar.collapsecycle;
+package tfar.collapsecycle.ducks;
 
 public interface MinecraftServerDuck {
-    void markResetting(boolean resetting);
     void resetNether();
     void resetOverworld();
 }

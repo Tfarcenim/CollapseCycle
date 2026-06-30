@@ -3,5 +3,10 @@
     "sounds": [
       "collapsecycle:collapse_start"
     ]
+  },
+  "unnatural_collapse_start": {
+    "sounds": [
+      "collapsecycle:unnatural_collapse_start"
+    ]
   }
 }

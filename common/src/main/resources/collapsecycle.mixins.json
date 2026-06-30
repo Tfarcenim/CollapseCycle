@@ -7,8 +7,7 @@
   "mixins": [
     "MinecraftServerMixin",
     "PlayerMixin",
-    "PrimaryLevelDataAccess",
-    "ServerLevelMixin"
+    "PrimaryLevelDataAccess"
   ],
   "client": [
   ],

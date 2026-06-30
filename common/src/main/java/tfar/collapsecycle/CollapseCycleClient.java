@@ -2,7 +2,6 @@ package tfar.collapsecycle;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import it.unimi.dsi.fastutil.floats.FloatConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -20,11 +19,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import tfar.collapsecycle.ducks.PlayerDuck;
 import tfar.collapsecycle.init.ModBlocks;
 import tfar.collapsecycle.network.S2CSetCollapseInfo;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class CollapseCycleClient {
 

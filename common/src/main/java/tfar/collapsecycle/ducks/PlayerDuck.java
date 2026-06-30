@@ -1,4 +1,4 @@
-package tfar.collapsecycle;
+package tfar.collapsecycle.ducks;
 
 public interface PlayerDuck {
     int timeInBeam();

@@ -17,6 +17,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tfar.collapsecycle.ducks.PlayerDuck;
 import tfar.collapsecycle.init.Misc;
 import tfar.collapsecycle.init.ModBlocks;
 import tfar.collapsecycle.init.ModDamageSource;

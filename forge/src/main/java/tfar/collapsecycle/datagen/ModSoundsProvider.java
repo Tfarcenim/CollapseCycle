@@ -14,5 +14,6 @@ public class ModSoundsProvider extends SoundDefinitionsProvider {
     @Override
     public void registerSounds() {
        add(ModSounds.COLLAPSE_START,definition().with(sound(ModSounds.COLLAPSE_START.getLocation())));
+        add(ModSounds.UNNATURAL_COLLAPSE_START,definition().with(sound(ModSounds.UNNATURAL_COLLAPSE_START.getLocation())));
     }
 }

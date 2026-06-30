@@ -124,5 +124,6 @@ public class CollapseCycleForge {
                     stringSupplierPair.getValue()));
         }
         event.register(Registries.SOUND_EVENT,CollapseCycle.id("collapse_start"),() -> ModSounds.COLLAPSE_START);
+        event.register(Registries.SOUND_EVENT,CollapseCycle.id("unnatural_collapse_start"),() -> ModSounds.UNNATURAL_COLLAPSE_START);
     }
 }

@@ -1,8 +1,8 @@
 package tfar.collapsecycle;
 
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import org.apache.commons.io.FileUtils;
+import tfar.collapsecycle.ducks.MinecraftServerDuck;
 import tfar.collapsecycle.platform.Services;
 
 import java.io.File;
@@ -15,7 +15,7 @@ public class SpaceTimeManager {
     public static FileFilter filter = SpaceTimeManager::shouldDelete;
     static List<String> SKIP = new ArrayList<>();
     static {
-        SKIP.addAll(List.of("playerdata", "advancements", "level.dat","nullzone","dimensions", CollapseCycle.MOD_ID));
+        SKIP.addAll(List.of("playerdata", "advancements", "level.dat","nullzone","dimensions","DIM1", CollapseCycle.MOD_ID));
     }
 
     static boolean shouldDelete(File file) {
@@ -26,24 +26,16 @@ public class SpaceTimeManager {
     private static final File currentSaveRootDirectory = Services.PLATFORM.getSaveDirectory().toFile();
 
     public static void reset(MinecraftServer server) {
-        CollapseCycleConfig.Server.CURRENT_SEED.set(server.overworld().random.nextLong());
         try {
             File file = server.storageSource.levelDirectory.path().toFile();
             delete(file);
 
-           // ((MinecraftServerDuck)server).resetNether();
             ((MinecraftServerDuck)server).resetOverworld();
+            ((MinecraftServerDuck)server).resetNether();
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void resetWorld(ServerLevel level) {
-            try {
-            } catch (Exception var5) {
-                var5.printStackTrace();
-            }
     }
 
     static void delete(File worldDir) throws IOException {

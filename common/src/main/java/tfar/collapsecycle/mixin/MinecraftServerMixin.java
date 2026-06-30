@@ -1,8 +1,6 @@
 package tfar.collapsecycle.mixin;
 
 import com.google.common.collect.ImmutableList;
-import it.unimi.dsi.fastutil.longs.LongIterator;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.LayeredRegistryAccess;
 import net.minecraft.core.Registry;
@@ -16,17 +14,13 @@ import net.minecraft.server.level.TicketType;
 import net.minecraft.server.level.progress.ChunkProgressListener;
 import net.minecraft.server.level.progress.ChunkProgressListenerFactory;
 import net.minecraft.util.Unit;
-import net.minecraft.world.RandomSequences;
 import net.minecraft.world.entity.ai.village.VillageSiege;
 import net.minecraft.world.entity.npc.CatSpawner;
 import net.minecraft.world.entity.npc.WanderingTraderSpawner;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.CustomSpawner;
-import net.minecraft.world.level.ForcedChunksSavedData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.BiomeManager;
-import net.minecraft.world.level.border.BorderChangeListener;
-import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.PatrolSpawner;
 import net.minecraft.world.level.levelgen.PhantomSpawner;
@@ -36,13 +30,12 @@ import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import tfar.collapsecycle.MinecraftServerDuck;
+import tfar.collapsecycle.ducks.MinecraftServerDuck;
 import tfar.collapsecycle.platform.Services;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.OptionalLong;
 import java.util.concurrent.Executor;
 
@@ -71,13 +64,6 @@ public abstract class MinecraftServerMixin implements MinecraftServerDuck {
     @Shadow public abstract boolean isSpawningMonsters();
 
     @Shadow public abstract boolean isSpawningAnimals();
-
-    boolean resetting;
-
-    @Override
-    public void markResetting(boolean resetting) {
-        this.resetting = resetting;
-    }
 
     @Override
     public void resetNether() {

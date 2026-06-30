@@ -44,7 +44,7 @@ public class OverworldPortalBlock extends Block {
             if (serverlevel == null) {
                 return;
             }
-
+            serverlevel.getBlockState(BlockPos.ZERO);
             int y = serverlevel.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,0,0);
             entity.teleportTo(serverlevel, 0, y, 0, Set.of(), entity.getYRot(), entity.getXRot());
         }
