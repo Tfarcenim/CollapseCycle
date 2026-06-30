@@ -1,8 +1,14 @@
 package tfar.collapsecycle;
 
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.saveddata.SavedData;
+import tfar.collapsecycle.init.ModSounds;
 import tfar.collapsecycle.network.S2CSetCollapseInfo;
 
 public class CollapseSavedData extends SavedData {
@@ -24,8 +30,21 @@ public class CollapseSavedData extends SavedData {
     public void tick() {
         if (active()) {
             countdown--;
+            if (countdown == 0) {
+                playGlobalSound(true);
+            }
         }
         CollapseCycle.sendToPlayersInLevel(level,new S2CSetCollapseInfo(active(), countdown));
+    }
+
+    void playGlobalSound(boolean natural) {
+        SoundEvent soundEvent = ModSounds.COLLAPSE_START;
+        for (ServerPlayer player : level.getServer().getPlayerList().getPlayers()) {
+        player.connection.send(new ClientboundSoundPacket(
+                Holder.direct(soundEvent), SoundSource.AMBIENT,player.getX(),player.getY(),player.getZ(),
+                1,1,0));
+        }
+
     }
 
     public boolean active() {
@@ -44,6 +63,7 @@ public class CollapseSavedData extends SavedData {
 
     public void destabilize() {
         countdown = 0;
+        playGlobalSound(false);
     }
 
     @Override

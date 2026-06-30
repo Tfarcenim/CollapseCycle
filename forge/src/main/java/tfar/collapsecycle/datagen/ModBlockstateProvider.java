@@ -3,15 +3,14 @@ package tfar.collapsecycle.datagen;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import tfar.collapsecycle.Constants;
+import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.init.ModBlocks;
 
 public class ModBlockstateProvider extends BlockStateProvider {
     public ModBlockstateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, Constants.MOD_ID, exFileHelper);
+        super(output, CollapseCycle.MOD_ID, exFileHelper);
     }
 
     @Override

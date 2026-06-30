@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import tfar.collapsecycle.CollapseCycle;
-import tfar.collapsecycle.Constants;
 import tfar.collapsecycle.block.SparkFlowerBlock;
 import tfar.collapsecycle.init.ModBlocks;
 
@@ -15,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class ModBlockTagProvider extends BlockTagsProvider {
     public ModBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @org.jetbrains.annotations.Nullable ExistingFileHelper existingFileHelper) {
-        super(output, lookupProvider, Constants.MOD_ID, existingFileHelper);
+        super(output, lookupProvider, CollapseCycle.MOD_ID, existingFileHelper);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package tfar.collapsecycle.platform;
 
-import tfar.collapsecycle.Constants;
+import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.platform.services.IPlatformHelper;
 
 import java.util.ServiceLoader;
@@ -24,7 +24,7 @@ public class Services {
         final T loadedService = ServiceLoader.load(clazz)
                 .findFirst()
                 .orElseThrow(() -> new NullPointerException("Failed to load service for " + clazz.getName()));
-        Constants.LOG.debug("Loaded {} for service {}", loadedService, clazz);
+        CollapseCycle.LOG.debug("Loaded {} for service {}", loadedService, clazz);
         return loadedService;
     }
 }

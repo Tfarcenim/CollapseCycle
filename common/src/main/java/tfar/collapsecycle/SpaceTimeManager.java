@@ -15,7 +15,7 @@ public class SpaceTimeManager {
     public static FileFilter filter = SpaceTimeManager::shouldDelete;
     static List<String> SKIP = new ArrayList<>();
     static {
-        SKIP.addAll(List.of("playerdata", "advancements", "level.dat","nullzone","dimensions",Constants.MOD_ID));
+        SKIP.addAll(List.of("playerdata", "advancements", "level.dat","nullzone","dimensions", CollapseCycle.MOD_ID));
     }
 
     static boolean shouldDelete(File file) {

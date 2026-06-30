@@ -7,12 +7,12 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import tfar.collapsecycle.Constants;
+import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.init.ModItems;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, Constants.MOD_ID, existingFileHelper);
+        super(output, CollapseCycle.MOD_ID, existingFileHelper);
     }
 
     @Override

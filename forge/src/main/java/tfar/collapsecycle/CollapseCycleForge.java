@@ -8,11 +8,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
@@ -30,18 +28,19 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.RegisterEvent;
-import tfar.collapsecycle.datagen.ModDatagen;
+import tfar.collapsecycle.datagen.CollapseCycleDatagen;
+import tfar.collapsecycle.init.ModSounds;
 import tfar.collapsecycle.network.PacketHandler;
 import tfar.collapsecycle.platform.ForgePlatformHelper;
 
 import java.util.function.Supplier;
 
-@Mod(Constants.MOD_ID)
+@Mod(CollapseCycle.MOD_ID)
 public class CollapseCycleForge {
     
     public CollapseCycleForge() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(ModDatagen::gather);
+        bus.addListener(CollapseCycleDatagen::gather);
         bus.addListener(this::register);
         bus.addListener(this::setup);
         // This method is invoked by the Forge mod loader when it is ready
@@ -50,6 +49,7 @@ public class CollapseCycleForge {
     
         // Use Forge to bootstrap the Common mod.
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER,CollapseCycleConfig.Server.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT,CollapseCycleConfig.Client.SPEC);
 
         if (FMLEnvironment.dist.isClient()) {
             CollapseCycleClientForge.init(bus);
@@ -64,6 +64,7 @@ public class CollapseCycleForge {
         ((MappedRegistry<?>)BuiltInRegistries.STRUCTURE_PIECE).unfreeze();
         ((MappedRegistry<?>)BuiltInRegistries.STRUCTURE_TYPE).unfreeze();
         ((MappedRegistry<?>)BuiltInRegistries.STRUCTURE_PLACEMENT).unfreeze();
+        ((MappedRegistry<?>)BuiltInRegistries.SOUND_EVENT).unfreeze();
         CollapseCycle.init();
     }
 
@@ -122,5 +123,6 @@ public class CollapseCycleForge {
             ForgePlatformHelper.TABS.forEach(stringSupplierPair -> event.register(Registries.CREATIVE_MODE_TAB,CollapseCycle.id(stringSupplierPair.getKey()),
                     stringSupplierPair.getValue()));
         }
+        event.register(Registries.SOUND_EVENT,CollapseCycle.id("collapse_start"),() -> ModSounds.COLLAPSE_START);
     }
 }

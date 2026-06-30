@@ -117,7 +117,8 @@ public class CollapseCycleClient {
     public static void setupCameraAngles(float pitch, float yaw, float roll, FloatConsumer pitchSetter, FloatConsumer yawSetter,
                                          FloatConsumer rollSetter) {
         double instability =  CollapseCycle.instability(Minecraft.getInstance().level);
-        double shakiness = 1/32d * instability;
+        double adj = CollapseCycleConfig.Client.SHAKE_SCALAR.get().function.applyAsDouble(instability);
+        double shakiness = CollapseCycleConfig.Client.SHAKE_AMOUNT.get() * adj;
         pitchSetter.accept(shake(pitch,shakiness));
         yawSetter.accept(shake(yaw,shakiness));
         rollSetter.accept(shake(roll,shakiness));

@@ -8,7 +8,6 @@ import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
@@ -16,6 +15,8 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tfar.collapsecycle.init.Misc;
 import tfar.collapsecycle.init.ModBlocks;
 import tfar.collapsecycle.init.ModDamageSource;
@@ -24,16 +25,17 @@ import tfar.collapsecycle.network.S2CModPacket;
 import tfar.collapsecycle.network.S2CSetCollapseInfo;
 import tfar.collapsecycle.platform.Services;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 // This class is part of the common project meaning it is shared between all supported loaders. Code written here can only
 // import and access the vanilla codebase, libraries used by vanilla, and optionally third party libraries that provide
 // common compatible binaries. This means common code can not directly use loader specific concepts such as Forge events
 // however it will be compatible with all supported mod loaders.
 public class CollapseCycle {
+
+    public static final String MOD_ID = "collapsecycle";
+    public static final String MOD_NAME = "CollapseCycle";
+    public static final Logger LOG = LoggerFactory.getLogger(MOD_NAME);
 
     // The loader specific projects are able to import and use any code from the common project. This allows you to
     // write the majority of your code here and load it from your loader specific projects. This example has some
@@ -180,7 +182,7 @@ public class CollapseCycle {
     }
 
     public static ResourceLocation id(String key) {
-        return new ResourceLocation(Constants.MOD_ID, key);
+        return new ResourceLocation(MOD_ID, key);
     }
 
     public static void onDimChange(ServerPlayer player, ResourceKey<Level> dimension) {

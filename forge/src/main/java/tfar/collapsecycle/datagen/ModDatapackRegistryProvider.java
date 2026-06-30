@@ -5,7 +5,7 @@ import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
-import tfar.collapsecycle.Constants;
+import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.NullDimension;
 import tfar.collapsecycle.init.ModDamageSource;
 import tfar.collapsecycle.init.ModFeatures;
@@ -28,6 +28,6 @@ public class ModDatapackRegistryProvider extends DatapackBuiltinEntriesProvider 
             .add(Registries.LEVEL_STEM, NullDimension::bootstrapStem);
 
     public ModDatapackRegistryProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, BUILDER, Set.of(Constants.MOD_ID));
+        super(output, registries, BUILDER, Set.of(CollapseCycle.MOD_ID));
     }
 }

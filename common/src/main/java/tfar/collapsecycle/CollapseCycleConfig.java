@@ -22,4 +22,20 @@ public class CollapseCycleConfig {
             SPEC = builder.build();
         }
     }
+
+    public static class Client {
+        public static final ForgeConfigSpec SPEC;
+
+        public static final ForgeConfigSpec.DoubleValue SHAKE_AMOUNT;
+        public static final ForgeConfigSpec.EnumValue<Scaling> SHAKE_SCALAR;
+        static {
+            ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+            builder.push("general");
+            SHAKE_AMOUNT =builder.defineInRange("shake_amount",1/64d,0,64);
+            SHAKE_SCALAR = builder.defineEnum("shake_scalar",Scaling.QUADRATIC);
+            builder.pop();
+
+            SPEC = builder.build();
+        }
+    }
 }

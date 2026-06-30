@@ -2,13 +2,13 @@ package tfar.collapsecycle.datagen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.LanguageProvider;
-import tfar.collapsecycle.Constants;
+import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.init.ModBlocks;
 import tfar.collapsecycle.init.ModItems;
 
 public class ModLangProvider extends LanguageProvider {
     public ModLangProvider(PackOutput output) {
-        super(output, Constants.MOD_ID,"en_us");
+        super(output, CollapseCycle.MOD_ID,"en_us");
     }
 
     @Override

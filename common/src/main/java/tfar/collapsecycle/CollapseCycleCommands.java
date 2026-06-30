@@ -10,7 +10,7 @@ import net.minecraft.world.level.storage.ServerLevelData;
 
 public class CollapseCycleCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
-        dispatcher.register(Commands.literal(Constants.MOD_ID)
+        dispatcher.register(Commands.literal(CollapseCycle.MOD_ID)
                 .then(Commands.literal("trigger")
                         .requires(stack -> stack.hasPermission(Commands.LEVEL_GAMEMASTERS))
                         .executes(CollapseCycleCommands::trigger))
