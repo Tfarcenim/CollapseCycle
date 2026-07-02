@@ -127,13 +127,23 @@ public class CollapseCycleClient {
                                          FloatConsumer rollSetter) {
         double instability =  CollapseCycle.instability(Minecraft.getInstance().level);
         double adj = CollapseCycleConfig.Client.SHAKE_SCALAR.get().function.applyAsDouble(instability);
-        double shakiness = CollapseCycleConfig.Client.SHAKE_AMOUNT.get() * adj;
+        double shakiness = CollapseCycleConfig.Client.SHAKE_AMOUNT.get() * adj + (double) impulse/250;
         pitchSetter.accept(shake(pitch,shakiness));
         yawSetter.accept(shake(yaw,shakiness));
         rollSetter.accept(shake(roll,shakiness));
     }
 
+    static int impulse;
+
     public static float shake(float angle,double shakiness) {
         return (float) (angle + (2 * Math.random()-1) * (shakiness * 360));
+    }
+
+    public static void shakeScreen() {
+        impulse = 10;
+    }
+
+    public static void tick() {
+        if (impulse > 0) impulse--;
     }
 }

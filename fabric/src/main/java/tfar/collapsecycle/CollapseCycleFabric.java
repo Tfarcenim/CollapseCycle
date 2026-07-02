@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,7 +30,7 @@ public class CollapseCycleFabric implements ModInitializer {
         ForgeConfigRegistry.INSTANCE.register(CollapseCycle.MOD_ID, ModConfig.Type.SERVER, CollapseCycleConfig.Server.SPEC);
         ForgeConfigRegistry.INSTANCE.register(CollapseCycle.MOD_ID, ModConfig.Type.CLIENT, CollapseCycleConfig.Client.SPEC);
 
-        ServerTickEvents.START_WORLD_TICK.register(CollapseCycle::levelTick);
+        ServerTickEvents.END_WORLD_TICK.register(CollapseCycle::endLevelTick);
         CommandRegistrationCallback.EVENT.register((commandDispatcher, commandBuildContext, commandSelection) -> CollapseCycleCommands.register(commandDispatcher));
         CollapseCycle.init();
 

@@ -109,7 +109,7 @@ public class CollapseCycleForge {
 
     void fallingCorrupt(TickEvent.LevelTickEvent event) {
         if (event.phase == TickEvent.Phase.END && event.side == LogicalSide.SERVER) {
-            CollapseCycle.levelTick((ServerLevel) event.level);
+            CollapseCycle.endLevelTick((ServerLevel) event.level);
         }
     }
 

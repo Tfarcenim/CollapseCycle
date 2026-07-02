@@ -3,8 +3,8 @@
     "type": "collapsecycle:exclude_origin",
     "exclude_radius": 64,
     "salt": 14357619,
-    "separation": 8,
-    "spacing": 16
+    "separation": 16,
+    "spacing": 32
   },
   "structures": [
     {

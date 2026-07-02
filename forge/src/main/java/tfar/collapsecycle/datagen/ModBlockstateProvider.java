@@ -16,8 +16,10 @@ public class ModBlockstateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         simpleBlockWithItem(ModBlocks.NULLSTONE.get(),cubeAll(ModBlocks.NULLSTONE.get()));
-        simpleBlockWithItem(ModBlocks.DESTABILIZER.get(),models().cubeAll("destabilizer",mcLoc("block/lodestone_side")));
-        flower(ModBlocks.SPARKFLOWER.get(),mcLoc("block/dandelion"));
+        simpleBlockWithItem(ModBlocks.DESTABILIZER.get(),models().cubeBottomTop(
+                "destabilizer",modLoc("block/destabilizer_side"),modLoc("block/destabilizer_bottom"),
+                modLoc("block/destabilizer_top")));
+        flower(ModBlocks.SPARKFLOWER.get(),modLoc("block/sparkflower"));
         simpleBlock(ModBlocks.OVERWORLD_PORTAL.get(),models().getExistingFile(modLoc("block/overworld_portal")));
     }
 

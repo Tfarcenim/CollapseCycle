@@ -3,6 +3,7 @@ package tfar.collapsecycle;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -38,7 +39,7 @@ public class CollapseSavedData extends SavedData {
     }
 
     void playGlobalSound(boolean natural) {
-        SoundEvent soundEvent = ModSounds.COLLAPSE_START;
+        SoundEvent soundEvent = natural ? ModSounds.COLLAPSE_START : ModSounds.UNNATURAL_COLLAPSE_START;
         for (ServerPlayer player : level.getServer().getPlayerList().getPlayers()) {
         player.connection.send(new ClientboundSoundPacket(
                 Holder.direct(soundEvent), SoundSource.AMBIENT,player.getX(),player.getY(),player.getZ(),
@@ -61,10 +62,15 @@ public class CollapseSavedData extends SavedData {
                 level.dimension().location().toString().replace(":","."));
     }
 
+    public static CollapseSavedData getOrMakeDefault(MinecraftServer server){
+        ServerLevel overworld = server.overworld();
+        return getOrMake(overworld);
+    }
+
     public void destabilize() {
         if (countdown > 0) {
-        countdown = 0;
-        playGlobalSound(false);
+            countdown = 0;
+            playGlobalSound(false);
         }
     }
 

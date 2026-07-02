@@ -24,6 +24,7 @@ import tfar.collapsecycle.init.ModDamageSource;
 import tfar.collapsecycle.init.ModItems;
 import tfar.collapsecycle.network.S2CModPacket;
 import tfar.collapsecycle.network.S2CSetCollapseInfo;
+import tfar.collapsecycle.network.S2CShakePacket;
 import tfar.collapsecycle.platform.Services;
 
 import java.util.List;
@@ -57,12 +58,11 @@ public class CollapseCycle {
     public static final GameRules.Key<GameRules.BooleanValue> ACTIVE = GameRules.register("collapsecycle:collapse_active",
             GameRules.Category.PLAYER, GameRules.BooleanValue.create(true));
 
-    public static void levelTick(ServerLevel level) {
+    public static void endLevelTick(ServerLevel level) {
         ResourceKey<Level> dimension = level.dimension();
 
         if (corruptible(dimension)) {
-            CollapseSavedData data = CollapseSavedData.getOrMake(level);
-            data.tick();
+            CollapseSavedData data = CollapseSavedData.getOrMakeDefault(level.getServer());
             long countdown = data.countdown();
             if (countdown <= 0) {
                 if (countdown == 0) {
@@ -82,7 +82,8 @@ public class CollapseCycle {
                         }
                     }
                 }
-            }
+            }//tick afterwards
+            data.tick();
         }
     }
 
@@ -147,7 +148,7 @@ public class CollapseCycle {
     }
 
     public static long getCountdown(Level level) {
-        return level.isClientSide ? CollapseCycleClient.getCountdown() : CollapseSavedData.getOrMake((ServerLevel) level).countdown();
+        return level.isClientSide ? CollapseCycleClient.getCountdown() : CollapseSavedData.getOrMakeDefault(level.getServer()).countdown();
     }
 
     public static int getCorruptionPos(Level level) {
@@ -168,7 +169,9 @@ public class CollapseCycle {
     }
 
     static void beginCorruption(ServerLevel level) {
-
+        for (ServerPlayer player : level.getServer().getPlayerList().getPlayers()) {
+            S2CShakePacket.INSTANCE.send(player);
+        }
     }
 
     public static boolean growCrops(Level level) {
@@ -197,6 +200,6 @@ public class CollapseCycle {
     }
 
     public static boolean isActive(Level level) {
-        return level.isClientSide ? CollapseCycleClient.active : CollapseSavedData.getOrMake((ServerLevel) level).active();
+        return level.isClientSide ? CollapseCycleClient.active : CollapseSavedData.getOrMakeDefault(level.getServer()).active();
     }
 }

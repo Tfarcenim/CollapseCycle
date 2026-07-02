@@ -30,10 +30,9 @@ public class DestabilizerBlock extends Block implements EntityBlock {
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         MinecraftServer server = level.getServer();
-        for (ServerLevel serverLevel : server.getAllLevels()) {
-            if (CollapseCycle.corruptible(serverLevel.dimension()) && server.getGameRules().getBoolean(CollapseCycle.ACTIVE)) {
-                CollapseSavedData.getOrMake(serverLevel).destabilize();
-            }
+        ServerLevel overworld = server.overworld();
+        if (CollapseCycle.corruptible(overworld.dimension()) && server.getGameRules().getBoolean(CollapseCycle.ACTIVE)) {
+            CollapseSavedData.getOrMakeDefault(server).destabilize();
         }
     }
 
