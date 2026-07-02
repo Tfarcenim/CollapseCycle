@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
 import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.levelgen.DestabilizerStructure;
+import tfar.collapsecycle.levelgen.ExcludeOriginStructurePlacement;
 import tfar.collapsecycle.levelgen.OneTimeStructure;
 import tfar.collapsecycle.levelgen.OneTimeStructurePlacement;
 
@@ -36,13 +37,17 @@ public class Misc {
     public static final StructurePlacementType<OneTimeStructurePlacement> ONE_TIME_STRUCTURE_PLACEMENT = registerPlacement(ID,
             OneTimeStructurePlacement.CODEC);
 
+    public static final StructurePlacementType<ExcludeOriginStructurePlacement> EXCLUDE_ORIGIN_STRUCTURE_PLACEMENT =
+            registerPlacement("exclude_origin",
+            ExcludeOriginStructurePlacement.CODEC);
+
 
     public static void init() {
 
     }
 
     private static <SP extends StructurePlacement> StructurePlacementType<SP> registerPlacement(String name, Codec<SP> codec) {
-        return Registry.register(BuiltInRegistries.STRUCTURE_PLACEMENT, name, () -> codec);
+        return Registry.register(BuiltInRegistries.STRUCTURE_PLACEMENT,CollapseCycle.id(name), () -> codec);
     }
 
     private static ResourceKey<StructureSet> register(String name) {

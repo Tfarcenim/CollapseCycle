@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.NullDimension;
 import tfar.collapsecycle.levelgen.DestabilizerStructure;
+import tfar.collapsecycle.levelgen.ExcludeOriginStructurePlacement;
 import tfar.collapsecycle.levelgen.OneTimeStructure;
 import tfar.collapsecycle.levelgen.OneTimeStructurePlacement;
 
@@ -44,7 +45,7 @@ public class ModStructures {
 
         context.register(Misc.DESTABILIZER_SET,
                 new StructureSet(holdergetter.getOrThrow(DESTABILIZER),
-                        new RandomSpreadStructurePlacement(16, 8, RandomSpreadType.LINEAR, 14357619)));
+                        new ExcludeOriginStructurePlacement(32, 16, RandomSpreadType.LINEAR, 14357619,64)));
 
     }
 

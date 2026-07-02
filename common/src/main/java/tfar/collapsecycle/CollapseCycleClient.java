@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +21,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import tfar.collapsecycle.client.DestabilizerBlockEntityRenderer;
 import tfar.collapsecycle.ducks.PlayerDuck;
+import tfar.collapsecycle.init.ModBlockEntityTypes;
 import tfar.collapsecycle.init.ModBlocks;
 import tfar.collapsecycle.network.S2CSetCollapseInfo;
 
@@ -81,9 +85,11 @@ public class CollapseCycleClient {
 
         RenderSystem.disableDepthTest();
         RenderSystem.depthMask(false);
+        RenderSystem.enableBlend();
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, alpha);
         TextureAtlasSprite textureatlassprite = Minecraft.getInstance().getBlockRenderer().getBlockModelShaper().getParticleIcon(Blocks.NETHER_PORTAL.defaultBlockState());
         guiGraphics.blit(0, 0, -90, guiGraphics.guiWidth(), guiGraphics.guiHeight(), textureatlassprite);
+        RenderSystem.disableBlend();
         RenderSystem.depthMask(true);
         RenderSystem.enableDepthTest();
         guiGraphics.setColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -103,6 +109,10 @@ public class CollapseCycleClient {
     public static void renderTypes(BiConsumer<Block, RenderType> consumer) {
         consumer.accept(ModBlocks.SPARKFLOWER.get(),RenderType.cutout());
         consumer.accept(ModBlocks.OVERWORLD_PORTAL.get(),RenderType.translucent());
+    }
+
+    public static void setup() {
+        BlockEntityRenderers.register(ModBlockEntityTypes.DESTABILIZER, DestabilizerBlockEntityRenderer::new);
     }
 
     public static void handle(S2CSetCollapseInfo s2CSetCollapseInfo) {

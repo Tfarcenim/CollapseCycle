@@ -6,17 +6,20 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.PrimaryLevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
+import org.jetbrains.annotations.Nullable;
 import tfar.collapsecycle.CollapseCycle;
 import tfar.collapsecycle.CollapseCycleConfig;
 import tfar.collapsecycle.CollapseSavedData;
 
-public class DestabilizerBlock extends Block {
+public class DestabilizerBlock extends Block implements EntityBlock {
     public static final BooleanProperty TRIGGERED = BlockStateProperties.TRIGGERED;
 
     public DestabilizerBlock(Properties properties) {
@@ -40,15 +43,20 @@ public class DestabilizerBlock extends Block {
         boolean flag1 = state.getValue(TRIGGERED);
         if (flag && !flag1) {
             level.scheduleTick(pos, this, 4);
-            level.setBlock(pos, state.setValue(TRIGGERED, Boolean.valueOf(true)), 4);
+            level.setBlock(pos, state.setValue(TRIGGERED, true), 4);
         } else if (!flag && flag1) {
-            level.setBlock(pos, state.setValue(TRIGGERED, Boolean.valueOf(false)), 4);
+            level.setBlock(pos, state.setValue(TRIGGERED,false), 4);
         }
 
     }
 
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(TRIGGERED);
+    }
+
+    @Override
+    public @Nullable BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return state.getValue(TRIGGERED) ? new DestabilizerBlockEntity(pos, state) : null;
     }
 }
 //--Destabilizer: a block that when given a Redstone

@@ -62,8 +62,10 @@ public class CollapseSavedData extends SavedData {
     }
 
     public void destabilize() {
+        if (countdown > 0) {
         countdown = 0;
         playGlobalSound(false);
+        }
     }
 
     @Override

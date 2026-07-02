@@ -24,6 +24,7 @@ public class CollapseCycleClientForge {
     }
 
     static void setup(FMLClientSetupEvent event) {
+        CollapseCycleClient.setup();
         CollapseCycleClient.renderTypes(ItemBlockRenderTypes::setRenderLayer);
     }
 

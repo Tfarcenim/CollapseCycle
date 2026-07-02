@@ -29,6 +29,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.RegisterEvent;
 import tfar.collapsecycle.datagen.CollapseCycleDatagen;
+import tfar.collapsecycle.init.ModBlockEntityTypes;
 import tfar.collapsecycle.init.ModSounds;
 import tfar.collapsecycle.network.PacketHandler;
 import tfar.collapsecycle.platform.ForgePlatformHelper;
@@ -125,5 +126,6 @@ public class CollapseCycleForge {
         }
         event.register(Registries.SOUND_EVENT,CollapseCycle.id("collapse_start"),() -> ModSounds.COLLAPSE_START);
         event.register(Registries.SOUND_EVENT,CollapseCycle.id("unnatural_collapse_start"),() -> ModSounds.UNNATURAL_COLLAPSE_START);
+        event.register(Registries.BLOCK_ENTITY_TYPE,CollapseCycle.id("destabilizer"),() -> ModBlockEntityTypes.DESTABILIZER);
     }
 }

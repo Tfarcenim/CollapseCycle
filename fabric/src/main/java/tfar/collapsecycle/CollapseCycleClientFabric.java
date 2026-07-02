@@ -10,6 +10,7 @@ public class CollapseCycleClientFabric implements ClientModInitializer {
     public void onInitializeClient() {
         HudRenderCallback.EVENT.register(CollapseCycleClient::renderPortalOverlay);
         DimensionRenderingRegistry.registerDimensionEffects(NullDimension.ID,NullDimension.SPECIAL_EFFECTS);
+        CollapseCycleClient.setup();
         CollapseCycleClient.renderTypes(BlockRenderLayerMap.INSTANCE::putBlock);
     }
 }

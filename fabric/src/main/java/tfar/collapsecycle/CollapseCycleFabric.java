@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fml.config.ModConfig;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
+import tfar.collapsecycle.init.ModBlockEntityTypes;
 import tfar.collapsecycle.init.ModSounds;
 import tfar.collapsecycle.network.PacketHandler;
 
@@ -45,7 +46,7 @@ public class CollapseCycleFabric implements ModInitializer {
         PacketHandler.registerPackets();
         Registry.register(BuiltInRegistries.SOUND_EVENT,CollapseCycle.id("collapse_start"),ModSounds.COLLAPSE_START);
         Registry.register(BuiltInRegistries.SOUND_EVENT,CollapseCycle.id("unnatural_collapse_start"),ModSounds.UNNATURAL_COLLAPSE_START);
-
+        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,CollapseCycle.id("destabilizer"), ModBlockEntityTypes.DESTABILIZER);
     }
 
     public static boolean onCropsGrowPre(Level level, BlockPos pos, BlockState state, boolean def) {

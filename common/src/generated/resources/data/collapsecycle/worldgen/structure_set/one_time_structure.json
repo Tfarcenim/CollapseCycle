@@ -1,6 +1,6 @@
 {
   "placement": {
-    "type": "minecraft:one_time_structure"
+    "type": "collapsecycle:one_time_structure"
   },
   "structures": [
     {

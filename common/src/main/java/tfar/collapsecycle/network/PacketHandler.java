@@ -13,6 +13,7 @@ public class PacketHandler {
         Services.PLATFORM.registerServerPacket(C2SInputPacket.class, C2SInputPacket::new);
 
         Services.PLATFORM.registerClientPacket(S2CSetCollapseInfo.class, S2CSetCollapseInfo::fromPacket);
+        Services.PLATFORM.registerClientPacket(S2CShakePacket.class, f -> S2CShakePacket.INSTANCE);
     }
 
     public static ResourceLocation packet(Class<?> clazz) {

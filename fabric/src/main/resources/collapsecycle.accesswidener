@@ -11,3 +11,5 @@ accessible method net/minecraft/world/damagesource/DamageSources source (Lnet/mi
 accessible field net/minecraft/world/level/levelgen/structure/SinglePieceStructure constructor Lnet/minecraft/world/level/levelgen/structure/SinglePieceStructure$PieceConstructor;
 accessible field net/minecraft/world/level/levelgen/structure/SinglePieceStructure width I
 accessible field net/minecraft/world/level/levelgen/structure/SinglePieceStructure depth I
+accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
+accessible method net/minecraft/client/renderer/blockentity/BlockEntityRenderers register (Lnet/minecraft/world/level/block/entity/BlockEntityType;Lnet/minecraft/client/renderer/blockentity/BlockEntityRendererProvider;)V

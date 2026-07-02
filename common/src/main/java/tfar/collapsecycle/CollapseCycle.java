@@ -72,7 +72,7 @@ public class CollapseCycle {
                     for (ChunkHolder chunkHolder : chunks) {
                         LevelChunk fullChunk = chunkHolder.getTickingChunk();
                         if (fullChunk != null) {
-                            if (level.random.nextDouble() < 1 / 1024f) {
+                            if (level.random.nextDouble() < 1 / 2048f) {
                                 ChunkPos pos = fullChunk.getPos();
                                 int x = level.random.nextInt(16);
                                 int z = level.random.nextInt(16);
