@@ -62,8 +62,12 @@ public class NullDimension {
                 Optional.empty(),holdergetter.getOrThrow(BIOME), List.of());
         flatLevelGeneratorSettings.setAddLakes();
         flatLevelGeneratorSettings.setDecoration();
-        flatLevelGeneratorSettings.getLayersInfo().add(new FlatLayerInfo(1, Blocks.BEDROCK));
-        flatLevelGeneratorSettings.getLayersInfo().add(new FlatLayerInfo(1, ModBlocks.NULLSTONE.get()));
+
+        List<FlatLayerInfo> layersInfo = flatLevelGeneratorSettings.getLayersInfo();
+
+        layersInfo.add(new FlatLayerInfo(1, Blocks.BEDROCK));
+        layersInfo.add(new FlatLayerInfo(3, ModBlocks.NULLSTONE.get()));
+        layersInfo.add(new FlatLayerInfo(1, Blocks.GRASS_BLOCK));
         context.register(LEVEL_STEM,new LevelStem(holdergetterDim.getOrThrow(DIMENSION_TYPE),new FlatLevelSource(flatLevelGeneratorSettings)
         ));
     }

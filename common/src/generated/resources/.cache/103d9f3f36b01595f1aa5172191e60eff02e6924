@@ -1,6 +1,6 @@
-// 1.20.1	2026-07-01T22:17:26.8578829	Registries
+// 1.20.1	2026-07-18T23:53:14.4717981	Registries
 28d87d9220ee56cb8841478b839d4c1c091e9cae data/collapsecycle/damage_type/collapse.json
-90fe979f5bc6752ca2404c8720b6c465dc468999 data/collapsecycle/dimension/nullzone.json
+59f8ac2953283e1f073b08582565e6a2b7899eca data/collapsecycle/dimension/nullzone.json
 8a515a034c50a71f11bb234cfedda3c22114048b data/collapsecycle/dimension_type/nullzone.json
 03d506f78903cd057c2058e1853e2c31536f7984 data/collapsecycle/worldgen/biome/nullzone.json
 3bc868c7bc764c90b06fd8863326e6be4e6d7cb3 data/collapsecycle/worldgen/configured_feature/flower_nullzone.json

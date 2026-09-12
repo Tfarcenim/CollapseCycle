@@ -13,6 +13,10 @@
         },
         {
           "block": "collapsecycle:nullstone",
+          "height": 3
+        },
+        {
+          "block": "minecraft:grass_block",
           "height": 1
         }
       ]
