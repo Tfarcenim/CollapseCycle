@@ -9,6 +9,7 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePiecesBuilder;
@@ -31,13 +32,15 @@ public class OneTimeStructure extends Structure {
 
     public Optional<GenerationStub> findGenerationPoint(Structure.GenerationContext context) {
         ChunkPos chunkPos = context.chunkPos();
-        return Optional.of(new Structure.GenerationStub(new BlockPos(chunkPos.getMinBlockX(),2,chunkPos.getMinBlockZ()), builder ->
-                        this.generatePieces(builder, context)));
+        ChunkGenerator chunkGenerator = context.chunkGenerator();
+        int y = chunkGenerator.getFirstFreeHeight(0, 0, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
+        BlockPos blockpos = new BlockPos(chunkPos.getMinBlockX(), y, chunkPos.getMinBlockZ());
+           return Optional.of(new Structure.GenerationStub(blockpos, builder ->
+                           this.generatePiece(builder, blockpos)));
     }
 
-    private void generatePieces(StructurePiecesBuilder builder, Structure.GenerationContext context) {
-        ChunkPos chunkpos = context.chunkPos();
-        builder.addPiece(new Piece(chunkpos.getMinBlockX(), chunkpos.getMinBlockZ()));
+    private void generatePiece(StructurePiecesBuilder builder, BlockPos pos) {
+        builder.addPiece(new Piece(pos));
     }
 
 
@@ -47,8 +50,8 @@ public class OneTimeStructure extends Structure {
             super(Misc.ONE_TIME_STRUCTURE_PIECE, tag);
         }
 
-        public Piece(int x, int z) {
-            super(Misc.DESTABILIZER_PIECE,0, StructurePiece.makeBoundingBox(x, 2, z, Direction.NORTH,
+        public Piece(BlockPos pos) {
+            super(Misc.DESTABILIZER_PIECE,0, StructurePiece.makeBoundingBox(pos.getX(), pos.getY(), pos.getZ(), Direction.NORTH,
                     22, 8, 19));
         }
 

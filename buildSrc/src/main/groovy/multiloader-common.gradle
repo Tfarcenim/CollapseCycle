@@ -46,6 +46,18 @@ repositories {
         name = "Fuzs Mod Resources"
         url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
     }
+    flatDir { dir 'libs' }
+
+    exclusiveContent {
+        forRepository {
+            maven {
+                url "https://cursemaven.com/"
+            }
+        }
+        filter {
+            includeGroup "curse.maven"
+        }
+    }
 
 }
 

@@ -32,9 +32,9 @@ public class ModStructures {
     public static void bootstrap(BootstapContext<Structure> context) {
         HolderGetter<Biome> holdergetter = context.lookup(Registries.BIOME);
         context.register(DESTABILIZER, new DestabilizerStructure(structure(holdergetter.getOrThrow(BiomeTags.IS_OVERWORLD),
-                TerrainAdjustment.NONE)));
+                TerrainAdjustment.BEARD_THIN)));
         context.register(NULLZONE_HUB, new OneTimeStructure(structure(HolderSet.direct(holdergetter.getOrThrow(NullDimension.BIOME)),
-                TerrainAdjustment.NONE)));
+                TerrainAdjustment.BEARD_THIN)));
     }
 
     public static void bootstrapStructureSet(BootstapContext<StructureSet> context) {

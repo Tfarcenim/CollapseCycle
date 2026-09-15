@@ -87,7 +87,7 @@ public class CollapseCycle {
         }
     }
 
-    public static final BlockPos NULLZONE_SPAWN = new BlockPos(0,3,0);
+    public static final BlockPos NULLZONE_SPAWN = new BlockPos(0,5,0);
 
     public static void onDeath(LivingEntity livingEntity, DamageSource source) {
         if (livingEntity instanceof ServerPlayer player && source.is(ModDamageSource.COLLAPSE)) {
