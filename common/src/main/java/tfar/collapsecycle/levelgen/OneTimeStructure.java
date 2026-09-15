@@ -34,7 +34,7 @@ public class OneTimeStructure extends Structure {
         ChunkPos chunkPos = context.chunkPos();
         ChunkGenerator chunkGenerator = context.chunkGenerator();
         int y = chunkGenerator.getFirstFreeHeight(0, 0, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
-        BlockPos blockpos = new BlockPos(chunkPos.getMinBlockX(), y, chunkPos.getMinBlockZ());
+        BlockPos blockpos = new BlockPos(chunkPos.getMinBlockX()+7, y, chunkPos.getMinBlockZ()+7);
            return Optional.of(new Structure.GenerationStub(blockpos, builder ->
                            this.generatePiece(builder, blockpos)));
     }
@@ -51,8 +51,8 @@ public class OneTimeStructure extends Structure {
         }
 
         public Piece(BlockPos pos) {
-            super(Misc.DESTABILIZER_PIECE,0, StructurePiece.makeBoundingBox(pos.getX(), pos.getY(), pos.getZ(), Direction.NORTH,
-                    22, 8, 19));
+            super(Misc.DESTABILIZER_PIECE,0, new
+                    BoundingBox(pos.getX(), pos.getY(), pos.getZ(),pos.getX()+21,pos.getY()+8,pos.getZ()+18));
         }
 
         @Override
@@ -65,7 +65,7 @@ public class OneTimeStructure extends Structure {
             StructureTemplateManager structuretemplatemanager = level.getLevel().getServer().getStructureManager();
             StructureTemplate structuretemplate = structuretemplatemanager.getOrCreate(ModStructures.NULLZONE_HUB.location());
             StructurePlaceSettings structureplacesettings = new StructurePlaceSettings().setRandom(random);
-            boolean b = structuretemplate.placeInWorld(level, pos.offset(-7,0, -2), pos, structureplacesettings, random, 2);
+            boolean b = structuretemplate.placeInWorld(level, pos.offset(-11,0,-9), pos, structureplacesettings, random, 2);
         }//22x8x19
     }
 

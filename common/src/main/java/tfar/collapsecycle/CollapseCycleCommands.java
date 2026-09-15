@@ -9,10 +9,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.storage.PrimaryLevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
+import net.minecraft.world.phys.Vec3;
 import tfar.collapsecycle.network.S2CSetCollapseInfo;
 import tfar.collapsecycle.platform.Services;
-
-import static tfar.collapsecycle.CollapseCycle.NULLZONE_SPAWN;
 
 public class CollapseCycleCommands {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
@@ -56,8 +55,10 @@ public class CollapseCycleCommands {
         MinecraftServer server = commandSourceStack.getServer();
         ServerLevel nullzoneLevel = server.getLevel(NullDimension.DIMENSION);
         ServerPlayer serverPlayer = commandSourceStack.getPlayer();
-        serverPlayer.teleportTo(nullzoneLevel, NULLZONE_SPAWN.getX()+.5, NULLZONE_SPAWN.getY(),
-                NULLZONE_SPAWN.getZ()+.5, 0, 0);
+
+        Vec3 origin = CollapseCycle.nullzoneOrigin(nullzoneLevel);
+
+        serverPlayer.teleportTo(nullzoneLevel,origin.x,origin.y,origin.z, 0, 0);
         Services.PLATFORM.sendToClient(new S2CSetCollapseInfo(false,CollapseCycleConfig.Server.TIME_LIMIT.get()),serverPlayer);
         return 1;
     }

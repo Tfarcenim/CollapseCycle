@@ -13,7 +13,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,11 +89,11 @@ public class CollapseCycle {
         }
     }
 
-    public static final BlockPos NULLZONE_SPAWN = new BlockPos(0,5,0);
-
     public static void onDeath(LivingEntity livingEntity, DamageSource source) {
         if (livingEntity instanceof ServerPlayer player && source.is(ModDamageSource.COLLAPSE)) {
-            player.setRespawnPosition(NullDimension.DIMENSION,NULLZONE_SPAWN,0,true,false);
+            ServerLevel serverLevel = player.server.getLevel(NullDimension.DIMENSION);
+            Vec3 origin = nullzoneOrigin(serverLevel);
+            player.setRespawnPosition(NullDimension.DIMENSION, BlockPos.containing(origin.x,origin.y,origin.z),0,true,false);
             Services.PLATFORM.sendToClient(new S2CSetCollapseInfo(false,CollapseCycleConfig.Server.TIME_LIMIT.get()),player);
         }
     }
@@ -133,8 +135,8 @@ public class CollapseCycle {
                             return;
                         }
                         if (timeinBeam >= DELAY) {
-                            serverPlayer.teleportTo(serverLevel, NULLZONE_SPAWN.getX()+.5, NULLZONE_SPAWN.getY(),
-                                    NULLZONE_SPAWN.getZ()+.5, 0, 0);
+                            Vec3 origin = nullzoneOrigin(serverLevel);
+                            serverPlayer.teleportTo(serverLevel, origin.x, origin.y,origin.z, 0, 0);
                             Services.PLATFORM.sendToClient(new S2CSetCollapseInfo(false,CollapseCycleConfig.Server.TIME_LIMIT.get()),serverPlayer);
                             playerDuck.reset();
                         }
@@ -145,6 +147,12 @@ public class CollapseCycle {
                 }
             }
         }
+    }
+
+    public static Vec3 nullzoneOrigin(ServerLevel level) {
+        int x = 0,z = 0;
+        int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,x,z);
+        return new Vec3(x+.5,Math.max(6,y),z+.5);
     }
 
     public static long getCountdown(Level level) {
