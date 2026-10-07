@@ -25,7 +25,8 @@ public class ModDatapackRegistryProvider extends DatapackBuiltinEntriesProvider 
             .add(Registries.STRUCTURE_SET, ModStructures::bootstrapStructureSet)
 
             .add(Registries.DAMAGE_TYPE, ModDamageSource::bootstrap)
-            .add(Registries.LEVEL_STEM, NullDimension::bootstrapStem);
+            .add(Registries.LEVEL_STEM, NullDimension::bootstrapStem)
+            .add(Registries.NOISE_SETTINGS, NullDimension::bootstrapNoiseGeneratorSettings);
 
     public ModDatapackRegistryProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(CollapseCycle.MOD_ID));

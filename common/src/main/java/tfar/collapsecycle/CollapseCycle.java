@@ -152,7 +152,7 @@ public class CollapseCycle {
     public static Vec3 nullzoneOrigin(ServerLevel level) {
         int x = 0,z = 0;
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,x,z);
-        return new Vec3(x+.5,Math.max(6,y),z+.5);
+        return new Vec3(x+.5,Math.max(64,y),z+.5);
     }
 
     public static long getCountdown(Level level) {
