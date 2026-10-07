@@ -1,6 +1,7 @@
 package tfar.collapsecycle;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -150,6 +151,7 @@ public class CollapseCycle {
     }
 
     public static Vec3 nullzoneOrigin(ServerLevel level) {
+        level.getBlockState(BlockPos.ZERO);
         int x = 0,z = 0;
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,x,z);
         return new Vec3(x+.5,Math.max(64,y),z+.5);
