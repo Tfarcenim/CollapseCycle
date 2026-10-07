@@ -34,7 +34,7 @@ public class OneTimeStructure extends Structure {
         ChunkPos chunkPos = context.chunkPos();
         ChunkGenerator chunkGenerator = context.chunkGenerator();
         int y = chunkGenerator.getFirstFreeHeight(0, 0, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
-        BlockPos blockpos = new BlockPos(chunkPos.getMinBlockX()+7, y, chunkPos.getMinBlockZ()+7);
+        BlockPos blockpos = new BlockPos(chunkPos.getMinBlockX()+4, y, chunkPos.getMinBlockZ()+7);
            return Optional.of(new Structure.GenerationStub(blockpos, builder ->
                            this.generatePiece(builder, blockpos)));
     }

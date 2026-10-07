@@ -37,16 +37,24 @@ public class ModStructures {
                 TerrainAdjustment.BEARD_THIN)));
     }
 
+
+    static boolean MAKE_SUPER_COMMON = true;
+
     public static void bootstrapStructureSet(BootstapContext<StructureSet> context) {
         HolderGetter<Structure> holdergetter = context.lookup(Registries.STRUCTURE);
         context.register(Misc.ONE_TIME_STRUCTURE_SET,
                 new StructureSet(holdergetter.getOrThrow(NULLZONE_HUB),
                         OneTimeStructurePlacement.INSTANCE));
 
-        context.register(Misc.DESTABILIZER_SET,
-                new StructureSet(holdergetter.getOrThrow(DESTABILIZER),
-                        new ExcludeOriginStructurePlacement(32, 16, RandomSpreadType.LINEAR, 14357619,64)));
-
+        if (MAKE_SUPER_COMMON) {
+            context.register(Misc.DESTABILIZER_SET,
+                    new StructureSet(holdergetter.getOrThrow(DESTABILIZER),
+                            new ExcludeOriginStructurePlacement(2, 1, RandomSpreadType.LINEAR, 14357619,0)));
+        } else {
+            context.register(Misc.DESTABILIZER_SET,
+                    new StructureSet(holdergetter.getOrThrow(DESTABILIZER),
+                            new ExcludeOriginStructurePlacement(32, 16, RandomSpreadType.LINEAR, 14357619,64)));
+        }
     }
 
     private static Structure.StructureSettings structure(HolderSet<Biome> biomes, Map<MobCategory, StructureSpawnOverride> spawnOverrides, GenerationStep.Decoration step, TerrainAdjustment terrainAdaptation) {

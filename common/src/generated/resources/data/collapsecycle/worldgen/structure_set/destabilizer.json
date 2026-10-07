@@ -1,10 +1,10 @@
 {
   "placement": {
     "type": "collapsecycle:exclude_origin",
-    "exclude_radius": 64,
+    "exclude_radius": 0,
     "salt": 14357619,
-    "separation": 16,
-    "spacing": 32
+    "separation": 1,
+    "spacing": 2
   },
   "structures": [
     {
